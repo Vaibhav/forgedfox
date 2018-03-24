@@ -1,6 +1,3 @@
-pragma solidity ^0.4.17;
-
-
 contract File {
     address FileCreator;
     bytes32 FileHash;
