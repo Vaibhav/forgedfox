@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import Form from './Form';
+import Paper from 'material-ui/Paper';
 
 class Drop extends Component {
   constructor() {
@@ -34,6 +35,15 @@ class Drop extends Component {
       textAlign: 'center',
     };
 
+    const style = {
+      height: 25,
+      width: 'fit-content',
+      margin: 20,
+      textAlign: 'center',
+      verticalAlign: 'middle',
+      display: 'inline-block',
+    };
+
     if (!this.state.uploaded) {
       return (
         <section className='centre' style={divStyle}>
@@ -47,12 +57,12 @@ class Drop extends Component {
     } else {
       return (
         <div style={divStyle}>
-          <h2>Dropped files</h2>
-            <ul>
+          <h2>Dropped File</h2>
+            <p>
               {
-                this.state.files.map(f => <li key={f.name}>{f.name} - {f.size} bytes</li>)
+                this.state.files.map(f => <Paper style={style} zDepth={1} key={f.name}><b>{f.name}</b> - {f.size} bytes</Paper>)
               }
-            </ul>
+            </p>
             <Form file={this.state.files} result={this.state.result}/>
         </div>
       )
