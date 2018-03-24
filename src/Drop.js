@@ -16,6 +16,7 @@ class Drop extends Component {
   }
 
   render() {
+    console.log(this.state.files);
     const divStyle = {
       width: 'fit-content',
       margin: '0 auto',

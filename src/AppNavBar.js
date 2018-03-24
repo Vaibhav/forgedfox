@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import Drop from './Drop';
 
