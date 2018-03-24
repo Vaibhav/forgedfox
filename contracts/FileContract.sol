@@ -25,7 +25,7 @@ contract FileContract {
       _;
   }
 
-  function addFile(bytes32 ipfsPath, 
+  function updateFile(bytes32 ipfsPath, 
                    bytes32 hash, 
                    bytes32 metadataHash) public returns (bool success) {
 
