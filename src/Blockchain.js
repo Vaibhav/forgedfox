@@ -43,7 +43,7 @@ process.env.TRANSFER_SHARES_TO_GAS_COST = "1000000";
 //const CREATE_BLACKPAPER_GAS_COST = 4001900; // TODO: CHANGE THIS TO ACCURATE VALUE
 //const TRANSFER_SHARES_TO_GAS_COST = 2000000;
 
-const USER_ADDRESS = '0x020535A975B670C355C9ED6d695a309Ed6615462';
+const USER_ADDRESS = '0xe38519D887C9211b0b0f5D7F0376f11279F1FaD1';
 const FILE_ADDRESS = '0x2171dA6A81bF377C791E55777794b59B5E2ee1d2';
 
 /*
@@ -163,7 +163,7 @@ async function tester() {
 
     // BLACKPAPER TESTS
     // 'a2de11df72a433d63be12e581feb2e596497c533a24fb0b6babc446f830ab9c6'
-    const jsonResponseX = await publishFileContract();
+    //const jsonResponseX = await publishFileContract();
     // const jsonResponseXI = await publishUserContract("fck", "you", "HARRY@POOPY.COM");
 
     //yee();
@@ -179,21 +179,23 @@ async function tester() {
 
     //const legalDocumentId = await callMethod(CONST_BLACKPAPER_METHODS.getLegalDocumentString, CONTRACT_ADDRESS); // THIS WORKED AII WE GUCCIII!!!
 
-    const addFileToFileContract = await sendFileContractMethod(NON_CONST_FILE_CONTRACT_METHODS.addFile, 
-                                                               FILE_ADDRESS, 
-                                                               1000000, 
-                                                               ["ownerid", "b", 500], 
-                                                               true); // THIS WORKED AII WE GUCCIII!!!
-    // const transferSharesBatchTest = await sendMethod(NON_CONST_BLACKPAPER_METHODS.transferSharesToBatch, CONTRACT_ADDRESS, 1000000, [stringToBytes32("boss"), [stringToBytes32("ownerid"), stringToBytes32("b")], [100, 100]], false);
+   // const addFileToFileContract = await sendFileContractMethod(NON_CONST_FILE_CONTRACT_METHODS.addFile, 
+   //                                                            FILE_ADDRESS, 
+   //                                                            1000000, 
+   //                                                            ["ownerid", "b", 500], 
+    //                                                           true); // THIS WORKED AII WE GUCCIII!!!
+     
+    
+    const getUser = await callUserContractMethod(CONST_USER_CONTRACAT_METHODS.getUser, 
+                                                 USER_ADDRESS, 
+                                                 1000000, 
+                                                 [], 
+                                                 false);
 
 
-    // const jsonResponse2 = await callMethod(CONST_BLACKPAPER_METHODS.pin, CONTRACT_ADDRESS);
-    // const propertyId = await callMethod(CONST_BLACKPAPER_METHODS.getPropertyIdString, CONTRACT_ADDRESS);
-    // const jsonResponse4 = await callMethod(CONST_BLACKPAPER_METHODS.issuedShares, CONTRACT_ADDRESS);
-    //const jsonResponse5 = await callMethod(CONST_BLACKPAPER_METHODS.isOwner, CONTRACT_ADDRESS, ["owneridX"], true);
-    //const jsonResponse6 = await callMethod(CONST_BLACKPAPER_METHODS.getOwnerCount, CONTRACT_ADDRESS);
-    // const owner1 = await callMethod(CONST_BLACKPAPER_METHODS.getOwnerIds, CONTRACT_ADDRESS, [0]);
-    // const jsonResponse8 = await callMethod(CONST_BLACKPAPER_METHODS.getOwnerStocks, CONTRACT_ADDRESS, [owner1]);
+        console.log(getUser);
+  
+   //  const jsonResponse8 = await callMethod(CONST_BLACKPAPER_METHODS.getOwnerStocks, CONTRACT_ADDRESS, [owner1]);
     // const jsonResponse9 = await callMethod(CONST_BLACKPAPER_METHODS.isOwner, CONTRACT_ADDRESS, [owner1]);
     //const jsonResponse10 = await transferShares(CONTRACT_ADDRESS, "ownerid", "b", 1200);
 
@@ -482,8 +484,6 @@ export const callFileContractMethod = async (abi, methodName,
     address, gasLimit, params = [],
     convertStringToBytes32 = false) => {
 
-
-
     return callContractMethod(FileContractJSON["abi"], methodName, address, params, convertStringToBytes32);
 
 }
@@ -494,14 +494,12 @@ export const sendUserContractMethod = async (methodName,
     params = [],
     convertStringToBytes32 = false) => {
 
-
     return sendContractMethod(UserJSON["abi"], methodName, address, gasLimit, params, convertStringToBytes32);
 }
 
 export const callUserContractMethod = async (methodName,
     address, gasLimit, params = [],
     convertStringToBytes32 = false) => {
-
 
     return callContractMethod(UserJSON["abi"], methodName, address, params, convertStringToBytes32)
 }
