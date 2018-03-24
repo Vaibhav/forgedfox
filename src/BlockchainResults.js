@@ -7,8 +7,8 @@ class BR extends Component {
   render() {
 
     const blockchain_user = {
-      firstName: "Harman",
-      lastName: "Singh",
+      firstName: "Paul",
+      lastName: "Iozzo",
       email: "harman.j.singh@hotmail.com"
     }
     

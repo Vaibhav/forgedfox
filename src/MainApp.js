@@ -7,6 +7,9 @@ class MainApp extends Component {
   render() {
     return (
       <div>
+        <div> 
+          Hello, Paul.
+        </div>
         <MuiThemeProvider>
           <AppNavBar />  
         </MuiThemeProvider>
