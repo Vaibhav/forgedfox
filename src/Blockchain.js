@@ -1,6 +1,11 @@
 // Import libraries
+
+
 const Web3 = require("web3");
 
+const series = require('async/series')
+const IPFS = require('ipfs')
+const fs = require("fs");
 
 //IPFS FILE RETRIEVAL EXAMPLE: https://ipfs.io/ipfs/QmXgZAUWd8yo4tvjBETqzUy3wLx5YRzuDwUQnBwRGrAmAo
 
@@ -20,6 +25,8 @@ const UserJSON = require(path.join(__dirname, "../build/contracts/User.json"));
 
 // Setup RPC connection
 const provider = new Web3.providers.HttpProvider("https://rinkeby.infura.io/ccr3cGB0LqgS5Om1vtBW");
+
+
 
 //const provider = new Web3.providers.HttpProvider("http://localhost:8545");
 const web3 = new Web3(provider);
@@ -115,37 +122,24 @@ const NON_CONST_USER_CONTRACT_METHODS = {
     vet: "vet",
 };
 
+//async function addToIPFS(fileBlob) {
+
+//}
+
+const NON_CONST_FILE_CONTRACT_METHOD_COSTS = {
+    addFile: 100000000,
+}
 
 async function addFile(ipfsFilePath, hash, metadataHash, fileContractAddress) {
-    sendMethod(
+    return sendFileContractMethod(
         NON_CONST_FILE_CONTRACT_METHODS.addFile,
         fileContractAddress,
-        NON_CONST_BP_METHOD_COSTS.transferSharesToBatch, [
-            stringToBytes32(purchaserId),
-            sellerIdsBytes32,
-            sellerTradeAmounts,
-            stringToBytes32(property["legalDocument"][legalDocumentVersion - 1]._id.toString())
+        NON_CONST_FILE_CONTRACT_METHOD_COSTS.addFile, [
+            stringToBytes32(ipfsFilePath),
+            stringToBytes32(hash),
+            stringToBytes32(metadataHash),
         ]
-    ).then(item => {
-        Logger.log("TRADE EXECUTION COMPLETE");
-        // res.status(200);
-        /*   res.json({
-             "success": true,
-             "orderId": buyerOrderId,
-             "smartContractAddress": smartContractAddress,
-             "transactionHash": item.transactionHash
-           });
-     */
-        Logger.log("SUCCESSFULLY TRADED ON BLOCKCHAIN");
-        Logger.log(item);
-
-    }).catch(err => {
-        Logger.log("ERROR IN BLOCKCHAIN DOING TRANSFER SHARES BATCH");
-        res.json({
-            err: err
-        });
-        Logger.log(err);
-    });
+    )
 }
 
 
@@ -191,7 +185,7 @@ async function tester() {
                                                  1000000, 
                                                  [], 
                                                  false);
-
+    
 
         console.log(getUser);
   

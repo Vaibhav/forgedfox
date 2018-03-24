@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
-import Hashes from 'jshashes';
+import {fileHash as FILE_HASH} from "../src/FileHash";
+
+
 
 class Form extends Component {
   constructor(props) {
@@ -15,12 +17,12 @@ class Form extends Component {
   handleChange = (event) => {
     this.setState({
       description: event.target.value,
-      metadataHash: new Hashes.SHA256().b64(event.target.value),
+      metadataHash: FILE_HASH(event.target.value),
     });
   };
 
   render() {
-    var fileHash = new Hashes.SHA256().b64((this.props.file.lastModified + this.props.file.size).toString() + this.props.file.name);
+    var fileHash = FILE_HASH((this.props.file.lastModified + this.props.file.size).toString() + this.props.file.name);
 
     return (
       <div>
