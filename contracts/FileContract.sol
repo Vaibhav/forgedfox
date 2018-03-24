@@ -20,21 +20,25 @@ contract FileContract {
   }
 
   modifier onlyAdmin() {
-      if (msg.sender != FileContractAdmin)
+      if (msg.sender != FileContractAdmin) //FileContractAdmin is a User Smart Contract
         revert();
       // Do not forget the "_;"! It will be replaced by the actual function body when the modifier is used.
       _;
   }
 
-  function addFile(bytes32 hash, bytes32 metadataHash) public returns (bool success) {
+  function addFile(bytes32 ipfsPath, 
+                   bytes32 hash, 
+                   bytes32 metadataHash) public returns (bool success) {
+
     address creator = msg.sender;
 
     File storage file = FileVersions[hash];
 
     // don't overwrite existing entries, and make sure handle isn't null
-    if(file.hash == 0 && metadataHash.length != 0){
+    if(file.hash == 0 && metadataHash.length != 0) {
       FileVersions[hash].creator = creator;
       FileVersions[hash].hash = hash;
+      FileVersions[hash].ipfsPath = ipfsPath;
       FileVersions[hash].metadataHash = metadataHash;
       FileVersions[hash].addedAt = block.timestamp;
 

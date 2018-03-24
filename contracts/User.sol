@@ -11,25 +11,26 @@ contract User {
     bytes32 Company;
     bytes32 Website;
 
-    event UserRequested(
-        address fileContract,
-        address indexed _owner,
-        address indexed _id
-    );
-
-    function User(address fileContract, bytes32 firstName, bytes32 lastName, bytes32 company, bytes32 website) public payable {
+    function User(bytes32 firstName, 
+                  bytes32 lastName, 
+                  bytes32 company, 
+                  bytes32 website) public payable {
         Owner = msg.sender;
         vetted = false;
 
-        FileContracts.push(fileContract);
+       // FileContracts.push(fileContract);
 
         FirstName  = firstName;
         LastName   = lastName;
         Company = company;
         Website = website;
 
-        UserRequested(fileContract, msg.sender, this);
     }
+
+    function addFileContract(address fileContract) public returns (bool success) {
+        FileContracts.push(fileContract);
+    }
+
 
     function isVetted() constant public returns (bool) {
         return (vetted);

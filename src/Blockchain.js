@@ -15,8 +15,8 @@ const privateKey = Buffer.from(rinkebyAccountPassword, 'hex')
  
  
 const path = require("path");
-const FileContractJSON = require(path.join(__dirname, "../../../blockchain/build/contracts/BlackPaper.json"));
- 
+const FileContractJSON = require(path.join(__dirname, "../build/contracts/FileContract.json"));
+const UserJSON = require(path.join(__dirname, "../build/contracts/User.json"));
  
 // Setup RPC connection
 const provider = new Web3.providers.HttpProvider("https://rinkeby.infura.io/ccr3cGB0LqgS5Om1vtBW");
@@ -122,7 +122,7 @@ async function tester() {
  
     // BLACKPAPER TESTS
     // 'a2de11df72a433d63be12e581feb2e596497c533a24fb0b6babc446f830ab9c6'
-    //const jsonResponseX = await publishContract("propertyId", "ownerid", "legaid", 123123, 10000);
+    const jsonResponseX = await publishContract("propertyId", "ownerid", "legaid", 123123, 10000);
  
     //yee();
     //getBalance();
@@ -133,7 +133,7 @@ async function tester() {
     // const jsonResponse = await getPin(SAMPLE_TEST_BLACKPAPER_ADDRESS); //DIDNT WORK -> UNMARSHALLING OUTPUT?
      // const jsonResponse = await transferSharesTo(SAMPLE_TEST_BLACKPAPER_ADDRESS,  "1", "k", 600);
     // const jsonResponse = await getOwnerCount(SAMPLE_TEST_BLACKPAPER_ADDRESS); // =>  { error: "Error calling contract: abi: unmarshalling empty output." } }
-    subscribeToBlackpaperEvents(CONTRACT_ADDRESS);
+   //subscribeToBlackpaperEvents(CONTRACT_ADDRESS);
  
     //const legalDocumentId = await callMethod(CONST_BLACKPAPER_METHODS.getLegalDocumentString, CONTRACT_ADDRESS); // THIS WORKED AII WE GUCCIII!!!
    
@@ -152,13 +152,13 @@ async function tester() {
     //const jsonResponse10 = await transferShares(CONTRACT_ADDRESS, "ownerid", "b", 1200);
    
     //TODO: make string conversions to bytes32 in an object recursive so it turns them all into bytes32!!!!!!!!
-    const sharesOwnerId = await callMethod(CONST_BLACKPAPER_METHODS.getOwnerStocks, CONTRACT_ADDRESS, ["ownerid"], true);
-    const sharesOwnerb = await callMethod(CONST_BLACKPAPER_METHODS.getOwnerStocks, CONTRACT_ADDRESS, ["b"], true);
-    const sharesBoss = await callMethod(CONST_BLACKPAPER_METHODS.getOwnerStocks, CONTRACT_ADDRESS, ["boss"], true);
+    //const sharesOwnerId = await callMethod(CONST_BLACKPAPER_METHODS.getOwnerStocks, CONTRACT_ADDRESS, ["ownerid"], true);
+    //const sharesOwnerb = await callMethod(CONST_BLACKPAPER_METHODS.getOwnerStocks, CONTRACT_ADDRESS, ["b"], true);
+    //const sharesBoss = await callMethod(CONST_BLACKPAPER_METHODS.getOwnerStocks, CONTRACT_ADDRESS, ["boss"], true);
  
-    console.log("Shares ownerId " + sharesOwnerId);
-    console.log("Shares b" + sharesOwnerb);
-    console.log("Shares boss" + sharesBoss);
+    //console.log("Shares ownerId " + sharesOwnerId);
+    //console.log("Shares b" + sharesOwnerb);
+    //console.log("Shares boss" + sharesBoss);
    
    //console.log("Transfer Shares Batch: " + JSON.stringify(transferSharesBatchTest));
     // const jsonResponse10 = await getOwnerIds(SAMPLE_TEST_BLACKPAPER_ADDRESS, 1);
@@ -340,12 +340,8 @@ Optionally the filter property can filter those events.
  
  
  
-export const publishContract = async (
-    _propertyId: String,
-    _ownerId: String,
-    _legalDocumentId: String,
-    _pin: Number,
-    _issuedShares) => {
+export const publishFileContract = async (
+   _fileContractAdmin ) => {
  
         const contract = new web3.eth.Contract(
             FileContractJSON["abi"]
@@ -353,12 +349,7 @@ export const publishContract = async (
  
     const contractToBeDeployed = contract.deploy({
         data: FileContractJSON["unlinked_binary"],
-        arguments: [
-            stringToBytes32(_propertyId),
-            stringToBytes32(_ownerId),
-            stringToBytes32(_legalDocumentId),
-            stringToBytes32(_pin),
-            _issuedShares]
+        arguments: [_fileContractAdmin]
     });
  
     // console.log(contractToBeDeployed);
