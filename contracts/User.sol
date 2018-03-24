@@ -8,13 +8,9 @@ contract User {
 
     bytes32 FirstName;
     bytes32 LastName;
-    bytes32 Company;
-    bytes32 Website;
 
     function User(bytes32 firstName, 
-                  bytes32 lastName, 
-                  bytes32 company, 
-                  bytes32 website) public payable {
+                  bytes32 lastName) public payable {
         Owner = msg.sender;
         vetted = false;
 
@@ -22,8 +18,6 @@ contract User {
 
         FirstName  = firstName;
         LastName   = lastName;
-        Company = company;
-        Website = website;
 
     }
 
@@ -40,17 +34,17 @@ contract User {
 
     }
 
-    function getUser() constant public returns (address, bool, bytes32, bytes32, bytes32, bytes32) {
+    function getUser() constant public returns (address, bool, bytes32, bytes32) {
 
-        return (Owner, vetted, FirstName, LastName, Company, Website);
+        return (Owner, vetted, FirstName, LastName);
     }
 
     function vet(uint index) public returns (bool success) {
       // Get ForgeFox contract
-      address AdminId = FileContract(FileContracts[index]).getAdmin();
+      address adminId = FileContract(FileContracts[index]).getAdmin();
       address sender = msg.sender;
 
-      if (sender == AdminId) {
+      if (sender == adminId) {
         vetted = true;
         return true;
       }

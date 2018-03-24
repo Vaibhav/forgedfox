@@ -340,8 +340,7 @@ Optionally the filter property can filter those events.
  
  
  
-export const publishFileContract = async (
-   _fileContractAdmin ) => {
+export const publishFileContract = async () => {
  
         const contract = new web3.eth.Contract(
             FileContractJSON["abi"]
@@ -349,7 +348,7 @@ export const publishFileContract = async (
  
     const contractToBeDeployed = contract.deploy({
         data: FileContractJSON["unlinked_binary"],
-        arguments: [_fileContractAdmin]
+        arguments: []
     });
  
     // console.log(contractToBeDeployed);
@@ -387,6 +386,53 @@ export const publishFileContract = async (
             return err;
         });
 };
+
+export const publishUserContract = async (_firstName, _lastName) => {
+    
+           const contract = new web3.eth.Contract(
+               FileContractJSON["abi"]
+           );
+    
+       const contractToBeDeployed = contract.deploy({
+           data: FileContractJSON["unlinked_binary"],
+           arguments: []
+       });
+    
+       // console.log(contractToBeDeployed);
+       const gasLimit = await contractToBeDeployed.estimateGas();
+    
+       //if (gasLimit > process.env.CREATE_BLACKPAPER_GAS_COST) {
+       //    return { "error": "GAS COST TOO HIGH PLEASE ADJUST IN PROCESS.ENV.FILE" }
+       //  }
+       const transactions = await web3.eth.getTransactionCount(process.env.ETHER_ACCOUNT_ADDRESS);
+       const gasPrice = await web3.eth.getGasPrice();
+       const nonce = web3.utils.toHex(transactions);
+       const gasPriceHex = web3.utils.toHex(gasPrice);
+       const gasLimitHex = web3.utils.toHex(process.env.CREATE_BLACKPAPER_GAS_COST); //(user defined)  
+    
+       const txParams = {
+           nonce: nonce,
+           gasPrice: gasPriceHex,
+           gasLimit: gasLimitHex,
+           //to: '0x0000000000000000000000000000000000000000',
+           //value: '0x00',
+           data: contractToBeDeployed.encodeABI() //contractToBeDeployed["_deployData"]
+       };
+    
+       const tx = new EthereumTx(txParams);
+       tx.sign(privateKey);
+       const serializedTx = tx.serialize();
+    
+       return await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'))
+           .on('receipt', console.log).then(function (receipt) {
+               // will be fired once the receipt its mined
+               console.log(receipt);
+               return receipt;
+           }).catch(err => {
+               console.log(err)
+               return err;
+           });
+   };
  
 //TODO FIX SEND METHOD:
 export const sendMethod = async (methodName: string, address, gasLimit, params = [], convertStringToBytes32 = false) => {
