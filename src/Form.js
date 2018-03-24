@@ -3,6 +3,24 @@ import TextField from 'material-ui/TextField';
 import {fileHash as FILE_HASH} from "../src/FileHash";
 
 
+const blockchain_user = {
+  firstName: "Harman",
+  lastName: "Singh",
+  email: "harman.j.singh@hotmail.com"
+}
+
+const blockchain_file_contents = {
+  "ipfs_path": "https://ipfs.io/ipfs/QmXgZAUWd8yo4tvjBETqzUy3wLx5YRzuDwUQnBwRGrAmAo",
+  "metadata_hash": "123123123",
+  "hash": "asc9898suc912",
+  "added_at": Date.now(),
+  "transaction_hash": "0-12i9di9i30",
+  "block_number": 3,
+  "block_hash": "123123123",
+}
+
+const blockchain_
+
 
 class Form extends Component {
   constructor(props) {
