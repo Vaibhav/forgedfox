@@ -43,7 +43,8 @@ process.env.TRANSFER_SHARES_TO_GAS_COST = "1000000";
 //const CREATE_BLACKPAPER_GAS_COST = 4001900; // TODO: CHANGE THIS TO ACCURATE VALUE
 //const TRANSFER_SHARES_TO_GAS_COST = 2000000;
 
-const CONTRACT_ADDRESS = '0x020535A975B670C355C9ED6d695a309Ed6615462';
+const USER_ADDRESS = '0x020535A975B670C355C9ED6d695a309Ed6615462';
+const FILE_ADDRESS = '0x2171dA6A81bF377C791E55777794b59B5E2ee1d2';
 
 /*
 export function stringToBytes32(str) {
@@ -163,22 +164,26 @@ async function tester() {
     // BLACKPAPER TESTS
     // 'a2de11df72a433d63be12e581feb2e596497c533a24fb0b6babc446f830ab9c6'
     const jsonResponseX = await publishFileContract();
-    // const jsonResponseXI = await publishUserContract("fck", "you");
+    // const jsonResponseXI = await publishUserContract("fck", "you", "HARRY@POOPY.COM");
 
     //yee();
     //getBalance();
     //callMethod();
 
 
-
-    // const jsonResponse = await getPin(SAMPLE_TEST_BLACKPAPER_ADDRESS); //DIDNT WORK -> UNMARSHALLING OUTPUT?
+    
+    //const jsonResponse = await getPin(SAMPLE_TEST_BLACKPAPER_ADDRESS); //DIDNT WORK -> UNMARSHALLING OUTPUT?
     // const jsonResponse = await transferSharesTo(SAMPLE_TEST_BLACKPAPER_ADDRESS,  "1", "k", 600);
     // const jsonResponse = await getOwnerCount(SAMPLE_TEST_BLACKPAPER_ADDRESS); // =>  { error: "Error calling contract: abi: unmarshalling empty output." } }
     //subscribeToBlackpaperEvents(CONTRACT_ADDRESS);
 
     //const legalDocumentId = await callMethod(CONST_BLACKPAPER_METHODS.getLegalDocumentString, CONTRACT_ADDRESS); // THIS WORKED AII WE GUCCIII!!!
 
-    //const transferShares = await sendMethod(NON_CONST_BLACKPAPER_METHODS.transferSharesTo, CONTRACT_ADDRESS, 1000000, ["ownerid", "b", 500], true); // THIS WORKED AII WE GUCCIII!!!
+    const addFileToFileContract = await sendFileContractMethod(NON_CONST_FILE_CONTRACT_METHODS.addFile, 
+                                                               FILE_ADDRESS, 
+                                                               1000000, 
+                                                               ["ownerid", "b", 500], 
+                                                               true); // THIS WORKED AII WE GUCCIII!!!
     // const transferSharesBatchTest = await sendMethod(NON_CONST_BLACKPAPER_METHODS.transferSharesToBatch, CONTRACT_ADDRESS, 1000000, [stringToBytes32("boss"), [stringToBytes32("ownerid"), stringToBytes32("b")], [100, 100]], false);
 
 
@@ -240,6 +245,7 @@ const transferShares = async (address, user1: string, user2: string, amount) => 
 };
 */
 
+//export const addSecureFile(fileBlob,)
 
 const getBalance = async (ether = false) => {
     const wei = await web3.eth.getBalance(process.env.ETHER_ACCOUNT_ADDRESS);
@@ -250,7 +256,7 @@ const getBalance = async (ether = false) => {
     }
 };
 
-export const getGasPrice = async (methodName: string, address, params = []) => {
+export const getGasPrice = async (methodName, address, params = []) => {
     const contract = new web3.eth.Contract(
         FileContractJSON["abi"]
     );
