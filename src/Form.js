@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import {fileHash as FILE_HASH} from "../src/FileHash";
-
+import RaisedButton from 'material-ui/RaisedButton';
 
 const blockchain_user = {
   firstName: "Harman",
@@ -18,8 +18,6 @@ const blockchain_file_contents = {
   "block_number": 3,
   "block_hash": "123123123",
 }
-
-
 
 class Form extends Component {
   constructor(props) {
@@ -40,6 +38,11 @@ class Form extends Component {
 
   render() {
     var fileHash = FILE_HASH((this.props.file.lastModified + this.props.file.size).toString() + this.props.file.name);
+
+    function printLink() {
+      var objectURL = URL.createObjectURL(new Blob([this.props.result], { type: "application/pdf" }));
+      console.log(objectURL);
+    }
 
     return (
       <div>
@@ -81,6 +84,7 @@ class Form extends Component {
           disabled={true}
         /><br />
         <br />
+        <RaisedButton label="Add File" primary={true} style={{ margin: 12 }} onClick={printLink.bind(this)}/>
     </div>
     );
   }

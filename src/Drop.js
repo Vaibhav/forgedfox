@@ -5,18 +5,29 @@ import Form from './Form';
 class Drop extends Component {
   constructor() {
     super()
-    this.state = { files: [], uploaded: false }
+    this.state = { files: [], uploaded: false, result: null }
   }
 
   onDrop(files) {
+    var file = files[0]
+    const reader = new FileReader();
+
+    reader.onload = (event) => {
+      console.log(event.target.result);
+      this.setState({
+        result: event.target.result,
+      });
+    };
+    const tmp = reader.readAsArrayBuffer(file);
+    console.log(tmp);
     this.setState({
       files,
       uploaded: true,
+      result: reader.result,
     });
   }
 
   render() {
-    console.log(this.state.files);
     const divStyle = {
       width: 'fit-content',
       margin: '0 auto',
@@ -42,7 +53,7 @@ class Drop extends Component {
                 this.state.files.map(f => <li key={f.name}>{f.name} - {f.size} bytes</li>)
               }
             </ul>
-            <Form file={this.state.files}/>
+            <Form file={this.state.files} result={this.state.result}/>
         </div>
       )
     }
