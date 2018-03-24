@@ -70,9 +70,11 @@ export async function createFile(UserAddress, data_blob, meta_data_json) {
    //     NON_CONST_USER_CONTRACT_METHODS_COSTS.addFileContract, 
   //      [newFileContractAddress])
 
-   let result = await updateFileToIPFS(newFileContractAddress, data_blob, meta_data_json);
+   let result = await updateFileToIPFS(newFileContractAddress, 
+                                       data_blob, 
+                                       meta_data_json);
 
-   return result;
+ //  return result;
 
 }
 
@@ -80,9 +82,7 @@ export async function createFile(UserAddress, data_blob, meta_data_json) {
 
 
 
-createFile(USER_ADDRESS,
-    data_blob,
-    meta);
+
 
 //For updating the file after its already created
 export async function updateFileToIPFS(FileContractAddress,
@@ -90,8 +90,8 @@ export async function updateFileToIPFS(FileContractAddress,
     meta_data_json) {
 
 
-    const node = new IPFS()
-        
+
+    
     let hashed_file = fileHash(data_blob);
     let hashed_metadata = fileHash(meta_data_json);
     let ipfsHash = ""
@@ -100,10 +100,13 @@ export async function updateFileToIPFS(FileContractAddress,
     console.log("hashed_metadata" + hashed_metadata);
     
     try {
-        node.on("ready", result => console.log(result));
-        let nodeVersion = node.version()
 
-        console.log("NODE VERSION IS " + nodeVersion);
+        const node = new IPFS()
+
+        let result = await node.onAsync("ready");
+        let nodeVersion = await node.version()
+
+        console.log("NODE VERSION IS " + JSON.stringify(nodeVersion));
         let fileToStore = data_blob;
 
 
@@ -164,10 +167,10 @@ export async function updateFileToIPFS(FileContractAddress,
     console.log("IPFS HASH IS " + ipfsHash);
     console.log("hashed FILE IS: " + hashed_file)
     console.log("meta data is " + hashed_metadata);
-
-    let fileResult = sendFileContractMethod(NON_CONST_FILE_CONTRACT_METHODS.updateFile,
-        FileContractAddress,
-        NON_CONST_FILE_CONTRACT_METHOD_COSTS.updateFile, [ipfsHash, hashed_file, hashed_metadata])
+    let fileResult = {};
+  //  let fileResult = await sendFileContractMethod(NON_CONST_FILE_CONTRACT_METHODS.updateFile,
+  //      FileContractAddress,
+  //      NON_CONST_FILE_CONTRACT_METHOD_COSTS.updateFile, [ipfsHash, hashed_file, hashed_metadata])
 
 
 
@@ -191,3 +194,8 @@ export async function updateFileToIPFS(FileContractAddress,
 export async function retrieveFileFromIPFS() {
 
 }
+
+
+createFile(USER_ADDRESS,
+    "asdasd",
+    meta);
