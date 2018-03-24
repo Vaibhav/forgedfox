@@ -13,6 +13,9 @@ const Web3 = require("web3");
 
 process.env.ETHER_ACCOUNT_ADDRESS = "0xa3a9c8d8CA5787743C4928cDF26f6e965296C688";
 process.env.ETHER_ACCOUNT_PASSWORD = "d8ba1dfb09d63711b63eda5683f6e2d71bfa4734173ad34bd1a7188babb4a258";
+process.env.CREATE_USER_GAS_COST = 4001900;
+process.env.CREATE_FILE_CONTRACT_COST = 4001900;
+
 const rinkebyAccountAddress = process.env.ETHER_ACCOUNT_ADDRESS;
 const rinkebyAccountPassword = process.env.ETHER_ACCOUNT_PASSWORD;
 
@@ -65,20 +68,24 @@ export const NON_CONST_FILE_CONTRACT_METHODS = {
     updateFile: "updateFile",
 };
 
-const CONST_USER_CONTRACAT_METHODS = {
+export const CONST_USER_CONTRACAT_METHODS = {
     getUser: "getUser",
     getFile: "getFile",
     getContractAmount: "getContractAmount"
 };
 
-const NON_CONST_USER_CONTRACT_METHODS = {
+export const NON_CONST_USER_CONTRACT_METHODS = {
     addFileContract: "addFileContract",
     vet: "vet",
 };
 
 
 export const NON_CONST_FILE_CONTRACT_METHOD_COSTS = {
-    updateFile: 100000000,
+    updateFile: 4001900,
+}
+
+export const NON_CONST_USER_CONTRACT_METHODS_COSTS = {
+    addFileContract: 4001900,
 }
 
 async function updateFile(ipfsFilePath, hash, metadataHash, fileContractAddress) {
@@ -125,8 +132,8 @@ async function tester() {
 
     // BLACKPAPER TESTS
     // 'a2de11df72a433d63be12e581feb2e596497c533a24fb0b6babc446f830ab9c6'
-    //const jsonResponseX = await publishFileContract();
-    const jsonResponseXI = await publishUserContract("Paul", "Iozzo", "paul@hotmail.com");
+    const jsonResponseX = await publishFileContract();
+   // const jsonResponseXI = await publishUserContract("Paul", "Iozzo", "paul@hotmail.com");
 
     //yee();
     //getBalance();
@@ -400,9 +407,6 @@ export const callContractMethod = async (abi, methodName: string, address, param
 
 
 
-
-
-
 export const publishFileContract = async () => {
 
     const contract = new web3.eth.Contract(
@@ -424,7 +428,7 @@ export const publishFileContract = async () => {
     const gasPrice = await web3.eth.getGasPrice();
     const nonce = web3.utils.toHex(transactions);
     const gasPriceHex = web3.utils.toHex(gasPrice);
-    const gasLimitHex = web3.utils.toHex(process.env.CREATE_BLACKPAPER_GAS_COST); //(user defined)  
+    const gasLimitHex = web3.utils.toHex(process.env.CREATE_FILE_CONTRACT_COST); //(user defined)  
 
     const txParams = {
         nonce: nonce,
@@ -473,7 +477,7 @@ export const publishUserContract = async (_firstName, _lastName, _email) => {
     const gasPrice = await web3.eth.getGasPrice();
     const nonce = web3.utils.toHex(transactions);
     const gasPriceHex = web3.utils.toHex(gasPrice);
-    const gasLimitHex = web3.utils.toHex(process.env.CREATE_BLACKPAPER_GAS_COST); //(user defined)  
+    const gasLimitHex = web3.utils.toHex(process.env.CREATE_USER_GAS_COST); //(user defined)  
 
     const txParams = {
         nonce: nonce,
@@ -530,4 +534,4 @@ export const callUserContractMethod = async (methodName,
 }
 
 
-tester();
+//tester();

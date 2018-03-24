@@ -26,8 +26,8 @@ contract FileContract {
   }
 
   function updateFile(bytes32 ipfsPath, 
-                   bytes32 hash, 
-                   bytes32 metadataHash) public returns (bool success) {
+                      bytes32 hash, 
+                      bytes32 metadataHash) public returns (bool success) {
 
     address creator = msg.sender;
 
