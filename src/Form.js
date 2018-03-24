@@ -19,7 +19,6 @@ const blockchain_file_contents = {
   "block_hash": "123123123",
 }
 
-const blockchain_
 
 
 class Form extends Component {
