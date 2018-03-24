@@ -14,7 +14,6 @@ contract FileContract {
   mapping ( bytes32 => File ) FileVersions; //Different versions of the same file
   bytes32[] filesByHashes;
 
-
   function FileContract() public payable {
     FileContractAdmin = msg.sender;
   }
@@ -49,10 +48,16 @@ contract FileContract {
     }
   }
 
+
+  function verifyFile(string data) {
+
+  }
+
+
   function getAdmin() constant public returns (address) { return FileContractAdmin; }
 
   function getFiles() constant public returns (bytes32[]) { return filesByHashes; }
-
+  
   function getFile(bytes32 hash) constant public returns (address,bytes32,bytes32,bytes32,uint) {
     File storage file = FileVersions[hash];
 
