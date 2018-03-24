@@ -50,7 +50,7 @@ process.env.TRANSFER_SHARES_TO_GAS_COST = "1000000";
 //const CREATE_BLACKPAPER_GAS_COST = 4001900; // TODO: CHANGE THIS TO ACCURATE VALUE
 //const TRANSFER_SHARES_TO_GAS_COST = 2000000;
 
-const USER_ADDRESS = '0xe38519D887C9211b0b0f5D7F0376f11279F1FaD1';
+const USER_ADDRESS = '0x21678DCefE1B0ED1852Ed7B6314c0Aa746027066';
 const FILE_ADDRESS = '0x2171dA6A81bF377C791E55777794b59B5E2ee1d2';
 
 /*
@@ -158,26 +158,19 @@ async function tester() {
     // BLACKPAPER TESTS
     // 'a2de11df72a433d63be12e581feb2e596497c533a24fb0b6babc446f830ab9c6'
     //const jsonResponseX = await publishFileContract();
-    // const jsonResponseXI = await publishUserContract("fck", "you", "HARRY@POOPY.COM");
+    //const jsonResponseXI = await publishUserContract("fck", "you", "HARRY@POOPY.COM");
 
     //yee();
     //getBalance();
     //callMethod();
 
-
-    
-    //const jsonResponse = await getPin(SAMPLE_TEST_BLACKPAPER_ADDRESS); //DIDNT WORK -> UNMARSHALLING OUTPUT?
-    // const jsonResponse = await transferSharesTo(SAMPLE_TEST_BLACKPAPER_ADDRESS,  "1", "k", 600);
-    // const jsonResponse = await getOwnerCount(SAMPLE_TEST_BLACKPAPER_ADDRESS); // =>  { error: "Error calling contract: abi: unmarshalling empty output." } }
-    //subscribeToBlackpaperEvents(CONTRACT_ADDRESS);
-
     //const legalDocumentId = await callMethod(CONST_BLACKPAPER_METHODS.getLegalDocumentString, CONTRACT_ADDRESS); // THIS WORKED AII WE GUCCIII!!!
 
-   // const addFileToFileContract = await sendFileContractMethod(NON_CONST_FILE_CONTRACT_METHODS.addFile, 
-   //                                                            FILE_ADDRESS, 
-   //                                                            1000000, 
+ //   const addFileToFileContract = await sendFileContractMethod(NON_CONST_FILE_CONTRACT_METHODS.addFile, 
+  //                                                             FILE_ADDRESS, 
+  //                                                             1000000, 
    //                                                            ["ownerid", "b", 500], 
-    //                                                           true); // THIS WORKED AII WE GUCCIII!!!
+    //                                                          true); // THIS WORKED AII WE GUCCIII!!!
      
     
     const getUser = await callUserContractMethod(CONST_USER_CONTRACAT_METHODS.getUser, 
@@ -186,9 +179,15 @@ async function tester() {
                                                  [], 
                                                  false);
     
+        console.log(getUser["0"])
+        console.log(getUser["1"])
+        console.log(bytes32ToString(getUser["2"]))  // Firstname
+        console.log(bytes32ToString(getUser["3"]))  // Lastname
+        console.log(bytes32ToString(getUser["4"])) //  Email
 
         console.log(getUser);
   
+
    //  const jsonResponse8 = await callMethod(CONST_BLACKPAPER_METHODS.getOwnerStocks, CONTRACT_ADDRESS, [owner1]);
     // const jsonResponse9 = await callMethod(CONST_BLACKPAPER_METHODS.isOwner, CONTRACT_ADDRESS, [owner1]);
     //const jsonResponse10 = await transferShares(CONTRACT_ADDRESS, "ownerid", "b", 1200);

@@ -54,9 +54,9 @@ contract User {
     
     
 
-    function getUser() constant public returns (address, bool, bytes32, bytes32) {
+    function getUser() constant public returns (address, bool, bytes32, bytes32, bytes32) {
 
-        return (Owner, vetted, FirstName, LastName);
+        return (Owner, vetted, FirstName, LastName, Email);
     }
 
     function vet(uint index) public returns (bool success) {
