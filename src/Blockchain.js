@@ -15,7 +15,7 @@ const privateKey = Buffer.from(rinkebyAccountPassword, 'hex')
  
  
 const path = require("path");
-const BlackPaperJSON = require(path.join(__dirname, "../../../blockchain/build/contracts/BlackPaper.json"));
+const FileContractJSON = require(path.join(__dirname, "../../../blockchain/build/contracts/BlackPaper.json"));
  
  
 // Setup RPC connection
@@ -211,7 +211,7 @@ const getBalance = async (ether = false) => {
  
 export const getGasPrice = async (methodName: string, address, params = []) => {
     const contract = new web3.eth.Contract(
-        BlackPaperJSON["abi"]
+        FileContractJSON["abi"]
     );
  
     contract.options.address = address;
@@ -221,12 +221,12 @@ export const getGasPrice = async (methodName: string, address, params = []) => {
  
  
 const contract = new web3.eth.Contract(
-    BlackPaperJSON["abi"]
+    FileContractJSON["abi"]
 );
  
 export const estimateGasForMethod = async (methodName: string, address, params = [], convertStringToBytes32 = false) => {
     const contract = new web3.eth.Contract(
-        BlackPaperJSON["abi"]
+        FileContractJSON["abi"]
     );
  
     contract.options.address = address;
@@ -273,7 +273,7 @@ Optionally the filter property can filter those events.
  
  
     const contract = new web3.eth.Contract(
-        BlackPaperJSON["abi"]
+        FileContractJSON["abi"]
     );
  
     contract.options.address = address;
@@ -348,11 +348,11 @@ export const publishContract = async (
     _issuedShares) => {
  
         const contract = new web3.eth.Contract(
-            BlackPaperJSON["abi"]
+            FileContractJSON["abi"]
         );
  
     const contractToBeDeployed = contract.deploy({
-        data: BlackPaperJSON["unlinked_binary"],
+        data: FileContractJSON["unlinked_binary"],
         arguments: [
             stringToBytes32(_propertyId),
             stringToBytes32(_ownerId),
@@ -400,7 +400,7 @@ export const publishContract = async (
 //TODO FIX SEND METHOD:
 export const sendMethod = async (methodName: string, address, gasLimit, params = [], convertStringToBytes32 = false) => {
     const contract = new web3.eth.Contract(
-        BlackPaperJSON["abi"]
+        FileContractJSON["abi"]
     );
  
     contract.options.address = address;
@@ -503,7 +503,7 @@ export const sendMethod = async (methodName: string, address, gasLimit, params =
  
 export const callMethod = async (methodName: string, address, params = [], convertStringToBytes32 = false) => {
     const contract = new web3.eth.Contract(
-        BlackPaperJSON["abi"]
+        FileContractJSON["abi"]
     );
  
     contract.options.address = address;
@@ -529,7 +529,7 @@ export const callMethod = async (methodName: string, address, params = [], conve
 /*
 export const transferSharesTo = async (contractAddress: String, user1: String, user2: String, amount: Number) => {
     const contract = new web3.eth.Contract(
-        BlackPaperJSON["abi"]
+        FileContractJSON["abi"]
     );
     contract.options.address = CONTRACT_ADDRESS;
     return callContractMethod(contractAddress, "transferSharesTo", {
