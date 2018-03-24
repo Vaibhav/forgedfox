@@ -37,8 +37,9 @@ const accountInfo = web3.eth.accounts.wallet.add({
 });
  
 //console.log(accountInfo);
-process.env.CREATE_BLACKPAPER_GAS_COST = 2000000;
-process.env.TRANSFER_SHARES_TO_GAS_COST = 1000000;
+process.env.CREATE_BLACKPAPER_GAS_COST = "2000000";
+process.env.TRANSFER_SHARES_TO_GAS_COST = "1000000";
+
 //const CREATE_BLACKPAPER_GAS_COST = 4001900; // TODO: CHANGE THIS TO ACCURATE VALUE
 //const TRANSFER_SHARES_TO_GAS_COST = 2000000;
  
@@ -122,8 +123,9 @@ async function tester() {
  
     // BLACKPAPER TESTS
     // 'a2de11df72a433d63be12e581feb2e596497c533a24fb0b6babc446f830ab9c6'
-    const jsonResponseX = await publishContract("propertyId", "ownerid", "legaid", 123123, 10000);
- 
+    const jsonResponseX = await publishFileContract();
+   // const jsonResponseXI = await publishUserContract("fck", "you");
+    
     //yee();
     //getBalance();
     //callMethod();
@@ -577,4 +579,4 @@ export const transferSharesTo = async (contractAddress: String, user1: String, u
   };
 */
  
-//tester();
+tester();
