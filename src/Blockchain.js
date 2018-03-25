@@ -412,12 +412,12 @@ export const publishFileContract = async () => {
     const contract = new web3.eth.Contract(
         FileContractJSON["abi"]
     );
-
+    console.log(contract);
     const contractToBeDeployed = contract.deploy({
         data: FileContractJSON["unlinked_binary"],
         arguments: []
     });
-
+    console.log(contractToBeDeployed);
     // console.log(contractToBeDeployed);
     const gasLimit = await contractToBeDeployed.estimateGas();
 
