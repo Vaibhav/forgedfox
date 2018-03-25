@@ -15,11 +15,16 @@ import {
     publishFileContract,
     sendFileContractMethod,
     sendUserContractMethod,
+    CONST_USER_CONTRACAT_METHODS,
     NON_CONST_FILE_CONTRACT_METHODS,
     NON_CONST_USER_CONTRACT_METHODS,
     NON_CONST_USER_CONTRACT_METHODS_COSTS,
     NON_CONST_FILE_CONTRACT_METHOD_COSTS,
+    CONST_FILE_CONTRACT_METHODS,
     stringToBytes32,
+    bytes32ToString,
+    callFileContractMethod,
+    callUserContractMethod,
 } from "./Blockchain";
 
 
@@ -76,6 +81,33 @@ export async function createFile(UserAddress, data_blob, meta_data_json) {
 
 
 //TODO: SHOULD HASHING BE DONE ON THE SMART CONTRACT OR IN THE JS.
+
+export async function getUser(USER_ADDRESS) {
+    const getUser = await callUserContractMethod(CONST_USER_CONTRACAT_METHODS.getUser, 
+        USER_ADDRESS, 
+        1000000, 
+        [], 
+        false);
+
+        console.log(getUser["0"])
+        console.log(getUser["1"])
+        console.log(bytes32ToString(getUser["2"]))  // Firstname
+        console.log(bytes32ToString(getUser["3"]))  // Lastname
+        console.log(bytes32ToString(getUser["4"])) //  Email
+        
+        
+        
+        const a =  {
+            "Owner": getUser["0"],
+            "vetted": getUser["1"],
+            "FirstName": bytes32ToString(getUser["2"]),
+            "LastName": bytes32ToString(getUser["3"]),
+            "Email": bytes32ToString(getUser["4"]),
+        };
+        console.log(a);
+        return a;
+}
+
 
 
 //For updating the file after its already created
@@ -148,24 +180,61 @@ export async function updateFileToIPFS(FileContractAddress,
         [  "kkjhkjhkj", //TODO: Chnage IPFSHash to string 
             hashed_file, 
             hashed_metadata], true)
-
-    return {
+    console.log("RESULT IS");
+    
+    const r = {
         "block_hash": fileResult["blockHash"],
         "block_number": fileResult["blockNumber"],
         "transaction_hash": fileResult["transactionHash"],
+        "contractAddress": FileContractAddress,
         "hash": hashed_file,
         "metadata_hash": hashed_metadata,
         "ipfs_path": "kkjhkjhkj",
         "added_at": Date.now(),
     }
+
+    console.log(r);
+    return r;
 }
+
+export async function verifyHash(FileContractAddress, test_file_blob) {
+    let hashed_test_file_blob = fileHash(test_file_blob);
+    let result = 
+        await callFileContractMethod(CONST_FILE_CONTRACT_METHODS.getFile, 
+                                     FileContractAddress, 
+                                     500000, 
+                                     [hashed_test_file_blob], true)
+    console.log(result);
+    const a = {
+        "creator": (result['0']),
+        "fileHash": bytes32ToString(result['1']),
+        "ipfsPath": bytes32ToString(result['2']),
+        "metadataHash": bytes32ToString(result['3']),
+        "addedAt": (result['4'])
+    };
+
+    console.log(a);
+    return a;
+ 
+}
+
 
 export async function retrieveFileFromIPFS() {
 
 }
 
 
-createFile(USER_ADDRESS, "asdasd", meta);
+
+
+//createFile(USER_ADDRESS, "asdasd", meta);
+
+
+//verifyHash('0xc32d12537A939B93D7B5Bc86Eb5EBE3501eaCE66', "asdasq")
+
+verifyHash('0xc32d12537A939B93D7B5Bc86Eb5EBE3501eaCE66', "asdasd")
+getUser(USER_ADDRESS);
+
+
 
 
     /*
