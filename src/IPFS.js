@@ -52,7 +52,7 @@ let meta = {
 };
 
 export async function createFile(UserAddress, data_blob, meta_data_json) {
-
+    console.log("YOU INPUTTED USER ADRESS: " + USER_ADDRESS);
     let newFileContract = await publishFileContract()
     console.log(newFileContract);
     let newFileContractAddress = newFileContract["contractAddress"];
@@ -145,12 +145,9 @@ export async function updateFileToIPFS(FileContractAddress,
         "updateFile",
         FileContractAddress,
         NON_CONST_FILE_CONTRACT_METHOD_COSTS.updateFile,
-        [   ipfsHash, 
+        [  "kkjhkjhkj", //TODO: Chnage IPFSHash to string 
             hashed_file, 
             hashed_metadata], true)
-
-
-
 
     return {
         "block_hash": fileResult["blockHash"],
@@ -158,10 +155,10 @@ export async function updateFileToIPFS(FileContractAddress,
         "transaction_hash": fileResult["transactionHash"],
         "hash": hashed_file,
         "metadata_hash": hashed_metadata,
-        "ipfs_path": ipfsHash,
+        "ipfs_path": "kkjhkjhkj",
         "added_at": Date.now(),
     }
-};
+}
 
 export async function retrieveFileFromIPFS() {
 
