@@ -29,17 +29,6 @@ class Form extends Component {
       this.setState({
         addedFile: true,
       });
-      // var objectURL = URL.createObjectURL(new Blob([this.props.result], { type: "application/pdf" }));
-      // console.log(objectURL);
-      // const meta_data = {
-      //   "description": this.state.description,
-      //   "file_size": this.props.file.size,
-      //   "lastModified": this.props.file.lastModified,
-      //   "name": this.props.file.name
-      // }
-      // const USER_ADDRESS = '0x8FDfccE1d7Ff2F00D86c68B7a0e50A074FB76b26';
-      // var xxx = createFile(USER_ADDRESS, this.props.result, meta_data);
-      // console.log(xxx);
     }
     if (!this.state.addedFile) {
       return (
@@ -47,16 +36,19 @@ class Form extends Component {
           <TextField
             hintText="First Name"
             floatingLabelText="First Name"
+            value="Paul"
           />
+          <br />
           <TextField
             hintText="Last Name"
             floatingLabelText="Last Name"
+            value="Iozzo"
           />
-          <br />
           <br />
           <TextField
             hintText="Email"
             floatingLabelText="Email"
+            value="paul.iozzo@gmail.com"
           /><br />
           <TextField
             hintText="File Description"
@@ -96,8 +88,8 @@ export default Form;
 
 
 // First & Last Name
-// Email 
+// Email
 // Show File Details
 // Description
-// Time Uploaded 
+// Time Uploaded
 // IP Address

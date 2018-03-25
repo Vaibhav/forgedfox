@@ -2,8 +2,68 @@ import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import Form from './Form';
 import Paper from 'material-ui/Paper';
+import RaisedButton from 'material-ui/RaisedButton';
+import { verifyHash, getUser } from './IPFS';
+import RefreshIndicator from 'material-ui/RefreshIndicator';
 
-class Drop extends Component {
+class Verify extends Component {
+  constructor() {
+    super();
+    this.state = { isLoading: true };
+  }
+
+  componentDidMount() {
+    const meta_data = {
+      "description": this.props.description,
+      "file_size": this.props.file.size,
+      "lastModified": this.props.file.lastModified,
+      "name": this.props.file.name,
+    }
+    const USER_ADDRESS = '0x8FDfccE1d7Ff2F00D86c68B7a0e50A074FB76b26' ;
+
+    const verFile = () => {
+      verifyHash(USER_ADDRESS, this.props.result, meta_data)
+      .then(verify => {
+        this.setState({ verify, isLoading: false })
+        console.log('FINISHED block await call!', verify);
+      })
+      .catch(err => console.log(err));
+    }
+
+    console.log("initial state of VF");
+    console.log(this.state);
+    verFile();
+  }
+
+  render() {
+    if (!this.state.isLoading) {
+      return (
+        <div className='results'>
+        {
+          ...this.state
+        }
+        </div>
+      );
+    }
+    return (
+      <div className='center'>
+        <RefreshIndicator
+          size={50}
+          left={70}
+          top={0}
+          loadingColor="#FF9800"
+          status="loading"
+          style={{ position: 'relative' }}
+        />
+      </div>
+    )
+  }
+}
+
+
+
+
+class VerifyDrop extends Component {
   constructor() {
     super()
     this.state = { files: [], uploaded: false, result: null }
@@ -19,8 +79,8 @@ class Drop extends Component {
         result: event.target.result,
       });
     };
-    const tmp = reader.readAsText(file);
-    console.log(tmp);
+
+    reader.readAsText(file);
     this.setState({
       files,
       uploaded: true,
@@ -73,11 +133,11 @@ class Drop extends Component {
                 this.state.files.map(f => <Paper style={style} zDepth={1} key={f.name}><b>{f.name}</b> - {f.size} bytes</Paper>)
               }
             </p>
-            <Form file={this.state.files} result={this.state.result}/>
+
         </div>
       )
     }
   }
 }
 
-export default Drop;
+export default VerifyDrop;

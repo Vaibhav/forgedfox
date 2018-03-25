@@ -61,19 +61,19 @@ export async function createFile(UserAddress, data_blob, meta_data_json) {
     let newFileContract = await publishFileContract()
     console.log(newFileContract);
     let newFileContractAddress = newFileContract["contractAddress"];
-    
+
 
   //  console.log("NEW FILE CONTRACT ADDRESS IS " + newFileContractAddress);
-    
+
  //   await sendUserContractMethod(
   //      NON_CONST_USER_CONTRACT_METHODS.addFileContract,
   //      USER_ADDRESS,
-  //      NON_CONST_USER_CONTRACT_METHODS_COSTS.addFileContract, 
+  //      NON_CONST_USER_CONTRACT_METHODS_COSTS.addFileContract,
    //     [newFileContractAddress])
-    
 
-   let result = await updateFileToIPFS(newFileContractAddress, 
-                                       data_blob, 
+
+   let result = await updateFileToIPFS(newFileContractAddress,
+                                       data_blob,
                                        meta_data_json);
 
    return result;
@@ -83,10 +83,10 @@ export async function createFile(UserAddress, data_blob, meta_data_json) {
 //TODO: SHOULD HASHING BE DONE ON THE SMART CONTRACT OR IN THE JS.
 
 export async function getUser(USER_ADDRESS) {
-    const getUser = await callUserContractMethod(CONST_USER_CONTRACAT_METHODS.getUser, 
-        USER_ADDRESS, 
-        1000000, 
-        [], 
+    const getUser = await callUserContractMethod(CONST_USER_CONTRACAT_METHODS.getUser,
+        USER_ADDRESS,
+        1000000,
+        [],
         false);
 
         console.log(getUser["0"])
@@ -94,9 +94,9 @@ export async function getUser(USER_ADDRESS) {
         console.log(bytes32ToString(getUser["2"]))  // Firstname
         console.log(bytes32ToString(getUser["3"]))  // Lastname
         console.log(bytes32ToString(getUser["4"])) //  Email
-        
-        
-        
+
+
+
         const a =  {
             "Owner": getUser["0"],
             "vetted": getUser["1"],
@@ -117,7 +117,7 @@ export async function updateFileToIPFS(FileContractAddress,
 
        // const node = new IPFS();
 
-    
+
     let hashed_file = fileHash(data_blob);
     let hashed_metadata = fileHash(meta_data_json);
     let ipfsHash = ""
@@ -126,7 +126,7 @@ export async function updateFileToIPFS(FileContractAddress,
     console.log("hashed_metadata" + hashed_metadata);
 
 
-/*    
+/*
     series([
             (cb) => node.on('ready', cb),
             (cb) => node.version((err, version) => {
@@ -139,7 +139,7 @@ export async function updateFileToIPFS(FileContractAddress,
             (cb) => {
                 let fileToStore = data_blob;
 
- 
+
                 node.files.add({
                     path: '',
                     content: fileToStore
@@ -167,7 +167,7 @@ export async function updateFileToIPFS(FileContractAddress,
                 })
             }
         ])
-        
+
     */
     console.log("IPFS HASH IS " + ipfsHash);
     console.log("hashed FILE IS: " + hashed_file)
@@ -177,11 +177,11 @@ export async function updateFileToIPFS(FileContractAddress,
         "updateFile",
         FileContractAddress,
         NON_CONST_FILE_CONTRACT_METHOD_COSTS.updateFile,
-        [  "kkjhkjhkj", //TODO: Chnage IPFSHash to string 
-            hashed_file, 
+        [  "kkjhkjhkj", //TODO: Chnage IPFSHash to string
+            hashed_file,
             hashed_metadata], true)
     console.log("RESULT IS");
-    
+
     const r = {
         "block_hash": fileResult["blockHash"],
         "block_number": fileResult["blockNumber"],
@@ -199,10 +199,10 @@ export async function updateFileToIPFS(FileContractAddress,
 
 export async function verifyHash(FileContractAddress, test_file_blob) {
     let hashed_test_file_blob = fileHash(test_file_blob);
-    let result = 
-        await callFileContractMethod(CONST_FILE_CONTRACT_METHODS.getFile, 
-                                     FileContractAddress, 
-                                     500000, 
+    let result =
+        await callFileContractMethod(CONST_FILE_CONTRACT_METHODS.getFile,
+                                     FileContractAddress,
+                                     500000,
                                      [hashed_test_file_blob], true)
     console.log(result);
     const a = {
@@ -216,7 +216,7 @@ export async function verifyHash(FileContractAddress, test_file_blob) {
 
     console.log(a);
     return a;
- 
+
 }
 
 
@@ -250,7 +250,7 @@ getUser(USER_ADDRESS);
 
         console.log("NODE VERSION IS " + JSON.stringify(nodeVersion));
         let fileToStore = data_blob;
-   
+
 
         node.files.add({
             path: '',
@@ -268,14 +268,14 @@ getUser(USER_ADDRESS);
  //              path: 'fook',
   //              content: fileToStore
  ///           });
- 
+
     //    console.log('\nAdded file:', filesAdded[0].path, filesAdded[0].hash)
      //   ipfsHash = filesAdded[0].hash
     } catch (error) {
         console.log(error);
     }
 
-    
-    
-    
+
+
+
     */

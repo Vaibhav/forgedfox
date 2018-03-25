@@ -140,19 +140,19 @@ async function tester() {
     //callMethod();
 
 
- //   const addFileToFileContract = await sendFileContractMethod(NON_CONST_FILE_CONTRACT_METHODS.addFile, 
-  //                                                             FILE_ADDRESS, 
-  //                                                             1000000, 
-   //                                                            ["ownerid", "b", 500], 
+ //   const addFileToFileContract = await sendFileContractMethod(NON_CONST_FILE_CONTRACT_METHODS.addFile,
+  //                                                             FILE_ADDRESS,
+  //                                                             1000000,
+   //                                                            ["ownerid", "b", 500],
     //                                                          true); // THIS WORKED AII WE GUCCIII!!!
-     
-    
-    const getUser = await callUserContractMethod(CONST_USER_CONTRACAT_METHODS.getUser, 
-                                                 USER_ADDRESS, 
-                                                 1000000, 
-                                                 [], 
+
+
+    const getUser = await callUserContractMethod(CONST_USER_CONTRACAT_METHODS.getUser,
+                                                 USER_ADDRESS,
+                                                 1000000,
+                                                 [],
                                                  false);
-    
+
         console.log(getUser["0"])
         console.log(getUser["1"])
         console.log(bytes32ToString(getUser["2"]))  // Firstname
@@ -160,7 +160,7 @@ async function tester() {
         console.log(bytes32ToString(getUser["4"])) //  Email
 
         console.log(getUser);
-  
+
 
    //  const jsonResponse8 = await callMethod(CONST_BLACKPAPER_METHODS.getOwnerStocks, CONTRACT_ADDRESS, [owner1]);
     // const jsonResponse9 = await callMethod(CONST_BLACKPAPER_METHODS.isOwner, CONTRACT_ADDRESS, [owner1]);
@@ -260,7 +260,7 @@ export const subscribeToBlackpaperEvents = async (address) => {
 myContract.events.allEvents([options][, callback])
 Same as events but receives all events from this smart contract.
 Optionally the filter property can filter those events.
-   
+
     */
 
 
@@ -351,7 +351,7 @@ export const sendContractMethod = async (abi, methodName,
 
     const nonce = web3.utils.toHex(transactions);
     const gasPriceHex = web3.utils.toHex(gasPrice);
-    const gasLimitHex = web3.utils.toHex(gasLimit); //(user defined)  
+    const gasLimitHex = web3.utils.toHex(gasLimit); //(user defined)
     const txParams = {
         nonce: nonce,
         gasPrice: gasPriceHex,
@@ -412,12 +412,12 @@ export const publishFileContract = async () => {
     const contract = new web3.eth.Contract(
         FileContractJSON["abi"]
     );
-    console.log(contract);
+
     const contractToBeDeployed = contract.deploy({
         data: FileContractJSON["unlinked_binary"],
         arguments: []
     });
-    console.log(contractToBeDeployed);
+
     // console.log(contractToBeDeployed);
     const gasLimit = await contractToBeDeployed.estimateGas();
 
@@ -428,7 +428,7 @@ export const publishFileContract = async () => {
     const gasPrice = await web3.eth.getGasPrice();
     const nonce = web3.utils.toHex(transactions);
     const gasPriceHex = web3.utils.toHex(gasPrice);
-    const gasLimitHex = web3.utils.toHex(CREATE_FILE_CONTRACT_COST); //(user defined)  
+    const gasLimitHex = web3.utils.toHex(CREATE_FILE_CONTRACT_COST); //(user defined)
 
     const txParams = {
         nonce: nonce,
@@ -462,8 +462,8 @@ export const publishUserContract = async (_firstName, _lastName, _email) => {
 
     const contractToBeDeployed = contract.deploy({
         data: UserJSON["unlinked_binary"],
-        arguments: [stringToBytes32(_firstName), 
-                    stringToBytes32(_lastName), 
+        arguments: [stringToBytes32(_firstName),
+                    stringToBytes32(_lastName),
                     stringToBytes32(_email)]
     });
 
@@ -477,7 +477,7 @@ export const publishUserContract = async (_firstName, _lastName, _email) => {
     const gasPrice = await web3.eth.getGasPrice();
     const nonce = web3.utils.toHex(transactions);
     const gasPriceHex = web3.utils.toHex(gasPrice);
-    const gasLimitHex = web3.utils.toHex(CREATE_USER_GAS_COST); //(user defined)  
+    const gasLimitHex = web3.utils.toHex(CREATE_USER_GAS_COST); //(user defined)
 
     const txParams = {
         nonce: nonce,
@@ -512,17 +512,17 @@ export const sendFileContractMethod = async (methodName,
     convertStringToBytes32 = false) => {
         console.log(FileContractJSON["abi"]);
     return sendContractMethod(FileContractJSON["abi"],
-                              methodName, 
-                              address, 
-                              gasLimit, 
-                              params, 
+                              methodName,
+                              address,
+                              gasLimit,
+                              params,
                               convertStringToBytes32);
 }
 
 export const callFileContractMethod = async (
     methodName,
-    address, 
-    gasLimit, 
+    address,
+    gasLimit,
     params = [],
     convertStringToBytes32 = false) => {
     return callContractMethod(FileContractJSON["abi"], methodName, address, params, convertStringToBytes32);
@@ -533,11 +533,11 @@ export const sendUserContractMethod = async (methodName,
     gasLimit,
     params = [],
     convertStringToBytes32 = false) => {
-    return sendContractMethod(UserJSON["abi"], 
-                              methodName, 
-                              address, 
-                              gasLimit, 
-                              params, 
+    return sendContractMethod(UserJSON["abi"],
+                              methodName,
+                              address,
+                              gasLimit,
+                              params,
                               convertStringToBytes32);
 }
 
