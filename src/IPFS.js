@@ -230,9 +230,9 @@ export async function retrieveFileFromIPFS() {
 //createFile(USER_ADDRESS, "asdasd", meta);
 
 
-//verifyHash('0xc32d12537A939B93D7B5Bc86Eb5EBE3501eaCE66', "asdasq")
+verifyHash('0x08D929C2AC54438ca19Ed5e99F7235D096790f8A', "asdasq")
 
-verifyHash('0xc32d12537A939B93D7B5Bc86Eb5EBE3501eaCE66', "asdasd")
+verifyHash('0x08D929C2AC54438ca19Ed5e99F7235D096790f8A', "asdasd")
 getUser(USER_ADDRESS);
 
 
