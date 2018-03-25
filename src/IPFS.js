@@ -7,12 +7,6 @@ const path = require("path");
 const bluebird = require("bluebird");
 
 
-
-
-IPFS = bluebird.promisifyAll(IPFS)
-
-
-
 import {
     fileHash
 } from "./FileHash";
@@ -50,7 +44,7 @@ import {
 
 const USER_ADDRESS = '0x8FDfccE1d7Ff2F00D86c68B7a0e50A074FB76b26';
 
-let data_blob = fs.readFileSync("./MedicalNote.pdf");
+//let data_blob = fs.readFileSync("./MedicalNote.pdf");
 //console.log("DATA BLOB IS:" + data_blob)
 let meta = {
     "description": "yooo"
@@ -89,7 +83,7 @@ export async function updateFileToIPFS(FileContractAddress,
     data_blob,
     meta_data_json) {
 
-
+       // const node = new IPFS();
 
     
     let hashed_file = fileHash(data_blob);
@@ -98,31 +92,10 @@ export async function updateFileToIPFS(FileContractAddress,
 
     console.log("hashed_file " + hashed_file);
     console.log("hashed_metadata" + hashed_metadata);
-    
-    try {
-
-        const node = new IPFS()
-
-        let result = await node.onAsync("ready");
-        let nodeVersion = await node.version()
-
-        console.log("NODE VERSION IS " + JSON.stringify(nodeVersion));
-        let fileToStore = data_blob;
 
 
-        let filesAdded = await node.files.addAsync({
-                path: '',
-                content: fileToStore
-            });
-
-        console.log('\nAdded file:', filesAdded[0].path, filesAdded[0].hash)
-        ipfsHash = filesAdded[0].hash
-    } catch (error) {
-        console.log(error);
-    }
-
-    /*
-        await series([
+/*    
+    series([
             (cb) => node.on('ready', cb),
             (cb) => node.version((err, version) => {
                 if (err) {
@@ -134,7 +107,7 @@ export async function updateFileToIPFS(FileContractAddress,
             (cb) => {
                 let fileToStore = data_blob;
 
-
+ 
                 node.files.add({
                     path: '',
                     content: fileToStore
@@ -144,33 +117,33 @@ export async function updateFileToIPFS(FileContractAddress,
                     }
 
                     console.log('\nAdded file:', filesAdded[0].path, filesAdded[0].hash)
-                    fileMultihash = filesAdded[0].hash
+                    ipfsHash = filesAdded[0].hash
                     cb()
                 })
 
             },
             (cb) => {
 
-                node.files.cat(fileMultihash, (err, data) => {
+                node.files.cat(ipfsHash, (err, data) => {
                     if (err) {
                         return cb(err)
                     }
 
                     console.log('\nFile content:')
-                    fs.writeFileSync("fook.pdf", data);
+                   // fs.writeFileSync("fook.pdf", data);
                     process.stdout.write(data)
                 })
             }
         ])
-        */ 
-    
+        
+    */
     console.log("IPFS HASH IS " + ipfsHash);
     console.log("hashed FILE IS: " + hashed_file)
     console.log("meta data is " + hashed_metadata);
-    let fileResult = {};
-  //  let fileResult = await sendFileContractMethod(NON_CONST_FILE_CONTRACT_METHODS.updateFile,
-  //      FileContractAddress,
-  //      NON_CONST_FILE_CONTRACT_METHOD_COSTS.updateFile, [ipfsHash, hashed_file, hashed_metadata])
+
+    let fileResult = await sendFileContractMethod(NON_CONST_FILE_CONTRACT_METHODS.updateFile,
+        FileContractAddress,
+        NON_CONST_FILE_CONTRACT_METHOD_COSTS.updateFile, [ipfsHash, hashed_file, hashed_metadata])
 
 
 
@@ -181,7 +154,7 @@ export async function updateFileToIPFS(FileContractAddress,
         "transaction_hash": fileResult["transactionHash"],
         "hash": hashed_file,
         "metadata_hash": hashed_metadata,
-        "ipfs_path": ipfsHash,
+        "ipfs_path": "sadsad",
         "added_at": Date.now(),
     }
 };
@@ -196,6 +169,47 @@ export async function retrieveFileFromIPFS() {
 }
 
 
-createFile(USER_ADDRESS,
-    "asdasd",
-    meta);
+createFile(USER_ADDRESS, "asdasd", meta);
+
+
+    /*
+    MY ATTEMPT AT BETTER IPFS CODE
+
+        try {
+
+        const node = new IPFS()
+
+        let result = await node.onAsync("ready");
+        let nodeVersion = await node.versionAsync()
+
+        console.log("NODE VERSION IS " + JSON.stringify(nodeVersion));
+        let fileToStore = data_blob;
+   
+
+        node.files.add({
+            path: '',
+            content: fileToStore
+        }, (err, filesAdded) => {
+            if (err) {
+                return cb(err)
+            }
+
+            console.log('\nAdded file:', filesAdded[0].path, filesAdded[0].hash)
+            let fileMultihash = filesAdded[0].hash
+        })
+
+//   node.files.add({
+ //              path: 'fook',
+  //              content: fileToStore
+ ///           });
+ 
+    //    console.log('\nAdded file:', filesAdded[0].path, filesAdded[0].hash)
+     //   ipfsHash = filesAdded[0].hash
+    } catch (error) {
+        console.log(error);
+    }
+
+    
+    
+    
+    */
