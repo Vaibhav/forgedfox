@@ -34,7 +34,7 @@ contract FileContract {
     File storage file = FileVersions[file_hash];
 
     // don't overwrite existing entries, and make sure handle isn't null
-    if(file.file_hash == 0 && metadata_Hash.length != 0) {
+    if(file.fileHash == 0 && metadata_Hash.length != 0) {
       FileVersions[file_hash].creator = creator;
       FileVersions[file_hash].fileHash = file_hash;
       FileVersions[file_hash].ipfsPath = ipfsPath;
@@ -50,7 +50,8 @@ contract FileContract {
 
 
   function verifyFile(bytes32 file_hash, bytes32 meta_hash) {
-    return (fileHash == file_hash && metadataHash == meta_hash);
+    return (FileVersions[FileVersions.length-1].fileHash == file_hash 
+            && FileVersions[FileVersions.length-1].metadataHash == meta_hash);
   }
 
 
