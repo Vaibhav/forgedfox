@@ -3,6 +3,7 @@ contract FileContract {
   address FileContractAdmin;
 
   struct File {
+    bool isFile;
     address creator;
     bytes32 fileHash;
     bytes32 metadataHash;
@@ -38,6 +39,7 @@ contract FileContract {
 
     // don't overwrite existing entries, and make sure handle isn't null
     if(file.fileHash == 0 && metadata_Hash.length != 0) {
+      FileVersions[file_hash].isFile = true;
       FileVersions[file_hash].creator = creator;
       FileVersions[file_hash].fileHash = file_hash;
       FileVersions[file_hash].ipfsPath = ipfsPath;
@@ -81,20 +83,21 @@ function bytes32ToString(bytes32 x) constant returns (string) {
 
   function getFiles() constant public returns (bytes32[]) { return filesByHashes; }
   
-  function getFile(bytes32 file_hash) constant public returns (bool, address, bytes32, bytes32, bytes32, uint) {
+  function getFile(bytes32 file_hash) constant public returns (bool, 
+                                                               address, 
+                                                               bytes32, 
+                                                               bytes32, 
+                                                               bytes32, 
+                                                               uint) {
     File storage file = FileVersions[file_hash];
 
-    bool foundFile = false;
-    if(file.fileHash == file_hash){
-      foundFile = true;
-    }
-
-    return (foundFile,
+    return (file.isFile,
             file.creator, 
             file.fileHash, 
             file.ipfsPath, 
             file.metadataHash, 
-            file.addedAt);
+            file.addedAt
+            );
   } //This verifies a file.
 
 }
