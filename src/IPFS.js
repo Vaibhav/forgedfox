@@ -163,11 +163,6 @@ export async function updateFileToIPFS(FileContractAddress,
     }
 };
 
-
-
-
-
-
 export async function retrieveFileFromIPFS() {
 
 }
