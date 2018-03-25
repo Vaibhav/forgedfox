@@ -1,10 +1,42 @@
 import React, { Component } from 'react';
 import './BlockchainResults.css';
 import RaisedButton from 'material-ui/RaisedButton';
-
+import { createFile } from './IPFS';
 
 class BR extends Component {
+
+  componentWillMount() {
+    console.log("BR BR");
+    console.log(this.props);
+  }
+
+  componentDidMount() {
+
+    const meta_data = {
+      "description": this.props.description,
+      "file_size": this.props.file.size,
+      "lastModified": this.props.file.lastModified,
+      "name": this.props.file.name
+    }
+    const USER_ADDRESS = '0x8FDfccE1d7Ff2F00D86c68B7a0e50A074FB76b26';
+    // var xxx = createFile(USER_ADDRESS, this.props.result, meta_data);
+    // console.log(xxx);
+
+    const fun = () => {
+      createFile(USER_ADDRESS, this.props.result, meta_data)
+      .then(block => {
+        this.setState({ block })
+        console.log(block);
+      })
+      .catch(err => console.log(err));
+    }
+    fun();
+  }
+
   render() {
+
+    console.log("state of BR");
+    console.log(this.state);
 
     const blockchain_user = {
       firstName: "Paul",

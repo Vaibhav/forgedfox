@@ -19,7 +19,7 @@ class Drop extends Component {
         result: event.target.result,
       });
     };
-    const tmp = reader.readAsArrayBuffer(file);
+    const tmp = reader.readAsText(file);
     console.log(tmp);
     this.setState({
       files,

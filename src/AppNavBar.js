@@ -1,7 +1,7 @@
 import React from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import Drop from './Drop';
-import BR from './BlockchainResults';
+// import BR from './BlockchainResults';
 
 const styles = {
   headline: {
@@ -21,7 +21,6 @@ const AppNavBar = () => (
     </Tab>
     <Tab label="Verify Document" >
       <div>
-        <BR />
       </div>
     </Tab>
     <Tab

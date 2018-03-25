@@ -16,16 +16,16 @@ process.env.ETHER_ACCOUNT_PASSWORD = "d8ba1dfb09d63711b63eda5683f6e2d71bfa473417
 process.env.CREATE_USER_GAS_COST = 4001900;
 process.env.CREATE_FILE_CONTRACT_COST = 4001900;
 
-const rinkebyAccountAddress = process.env.ETHER_ACCOUNT_ADDRESS;
-const rinkebyAccountPassword = process.env.ETHER_ACCOUNT_PASSWORD;
+const rinkebyAccountAddress = "0xa3a9c8d8CA5787743C4928cDF26f6e965296C688"; //process.env.ETHER_ACCOUNT_ADDRESS;
+const rinkebyAccountPassword = "d8ba1dfb09d63711b63eda5683f6e2d71bfa4734173ad34bd1a7188babb4a258"; //process.env.ETHER_ACCOUNT_PASSWORD;
 
 const EthereumTx = require('ethereumjs-tx')
 const privateKey = Buffer.from(rinkebyAccountPassword, 'hex')
 
 
 const path = require("path");
-const FileContractJSON = require(path.join(__dirname, "../build/contracts/FileContract.json"));
-const UserJSON = require(path.join(__dirname, "../build/contracts/User.json"));
+const FileContractJSON = require("../build/contracts/FileContract.json");
+const UserJSON = require("../build/contracts/User.json");
 
 // Setup RPC connection
 const provider = new Web3.providers.HttpProvider("https://rinkeby.infura.io/ccr3cGB0LqgS5Om1vtBW");
@@ -43,8 +43,8 @@ web3.eth.getBlock("latest", (error, result) => {
 web3.eth.accounts;
 
 const accountInfo = web3.eth.accounts.wallet.add({
-    privateKey: process.env.ETHER_ACCOUNT_PASSWORD,
-    address: process.env.ETHER_ACCOUNT_ADDRESS,
+    privateKey: rinkebyAccountPassword, //process.env.ETHER_ACCOUNT_PASSWORD,
+    address: rinkebyAccountAddress, //process.env.ETHER_ACCOUNT_ADDRESS,
 });
 
 //const CREATE_BLACKPAPER_GAS_COST = 4001900; // TODO: CHANGE THIS TO ACCURATE VALUE
