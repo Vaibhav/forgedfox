@@ -519,8 +519,11 @@ export const sendFileContractMethod = async (methodName,
                               convertStringToBytes32);
 }
 
-export const callFileContractMethod = async (abi, methodName,
-    address, gasLimit, params = [],
+export const callFileContractMethod = async (
+    methodName,
+    address, 
+    gasLimit, 
+    params = [],
     convertStringToBytes32 = false) => {
     return callContractMethod(FileContractJSON["abi"], methodName, address, params, convertStringToBytes32);
 }

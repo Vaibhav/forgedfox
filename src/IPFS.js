@@ -19,7 +19,9 @@ import {
     NON_CONST_USER_CONTRACT_METHODS,
     NON_CONST_USER_CONTRACT_METHODS_COSTS,
     NON_CONST_FILE_CONTRACT_METHOD_COSTS,
+    CONST_FILE_CONTRACT_METHODS,
     stringToBytes32,
+    callFileContractMethod,
 } from "./Blockchain";
 
 
@@ -148,25 +150,45 @@ export async function updateFileToIPFS(FileContractAddress,
         [  "kkjhkjhkj", //TODO: Chnage IPFSHash to string 
             hashed_file, 
             hashed_metadata], true)
-
-    return {
+    console.log("RESULT IS");
+    
+    const r = {
         "block_hash": fileResult["blockHash"],
         "block_number": fileResult["blockNumber"],
         "transaction_hash": fileResult["transactionHash"],
+        "contractAddress": FileContractAddress,
         "hash": hashed_file,
         "metadata_hash": hashed_metadata,
         "ipfs_path": "kkjhkjhkj",
         "added_at": Date.now(),
     }
+
+    console.log(r);
+    return r;
 }
+
+export async function verifyHash(FileContractAddress, test_file_blob) {
+    let hashed_test_file_blob = fileHash(test_file_blob);
+    let result = 
+        await callFileContractMethod(CONST_FILE_CONTRACT_METHODS.getFile, 
+                                     FileContractAddress, 
+                                     500000, 
+                                     [hashed_test_file_blob], true)
+
+    console.log(result);
+}
+
 
 export async function retrieveFileFromIPFS() {
 
 }
 
+//createFile(USER_ADDRESS, "asdasd", meta);
 
-createFile(USER_ADDRESS, "asdasd", meta);
 
+verifyHash('0xc32d12537A939B93D7B5Bc86Eb5EBE3501eaCE66', "asdasq")
+
+verifyHash('0xc32d12537A939B93D7B5Bc86Eb5EBE3501eaCE66', "asdasd")
 
     /*
     MY ATTEMPT AT BETTER IPFS CODE
