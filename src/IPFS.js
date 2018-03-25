@@ -19,6 +19,7 @@ import {
     NON_CONST_USER_CONTRACT_METHODS,
     NON_CONST_USER_CONTRACT_METHODS_COSTS,
     NON_CONST_FILE_CONTRACT_METHOD_COSTS,
+    stringToBytes32,
 } from "./Blockchain";
 
 
@@ -58,11 +59,13 @@ export async function createFile(UserAddress, data_blob, meta_data_json) {
     
 
     console.log("NEW FILE CONTRACT ADDRESS IS " + newFileContractAddress);
+    /*
     await sendUserContractMethod(
         NON_CONST_USER_CONTRACT_METHODS.addFileContract,
         USER_ADDRESS,
         NON_CONST_USER_CONTRACT_METHODS_COSTS.addFileContract, 
         [newFileContractAddress])
+    */
 
    let result = await updateFileToIPFS(newFileContractAddress, 
                                        data_blob, 
@@ -73,9 +76,7 @@ export async function createFile(UserAddress, data_blob, meta_data_json) {
 }
 
 
-
-
-
+//TODO: SHOULD HASHING BE DONE ON THE SMART CONTRACT OR IN THE JS.
 
 
 //For updating the file after its already created
@@ -142,10 +143,12 @@ export async function updateFileToIPFS(FileContractAddress,
     console.log("meta data is " + hashed_metadata);
 
     let fileResult = await sendFileContractMethod(
-        NON_CONST_FILE_CONTRACT_METHODS.updateFile,
+        "updateFile",
         FileContractAddress,
-        NON_CONST_FILE_CONTRACT_METHOD_COSTS.updateFile, 
-        [ipfsHash, hashed_file, hashed_metadata], true)
+        1,
+        [   "foook", 
+            hashed_file, 
+            hashed_metadata], true)
 
 
 
