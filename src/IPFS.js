@@ -53,26 +53,25 @@ let meta = {
 
 export async function createFile(UserAddress, data_blob, meta_data_json) {
 
-  //  let newFileContract = await publishFileContract()
- //   console.log(newFileContract);
-    let newFileContractAddress = "0x8D3B24e2F0433C56c2155BFfa5d2d34033FED1f7" //newFileContract["contractAddress"];
+    let newFileContract = await publishFileContract()
+    console.log(newFileContract);
+    let newFileContractAddress = newFileContract["contractAddress"];
     
 
-    console.log("NEW FILE CONTRACT ADDRESS IS " + newFileContractAddress);
-    /*
-    await sendUserContractMethod(
-        NON_CONST_USER_CONTRACT_METHODS.addFileContract,
-        USER_ADDRESS,
-        NON_CONST_USER_CONTRACT_METHODS_COSTS.addFileContract, 
-        [newFileContractAddress])
-    */
+  //  console.log("NEW FILE CONTRACT ADDRESS IS " + newFileContractAddress);
+    
+ //   await sendUserContractMethod(
+  //      NON_CONST_USER_CONTRACT_METHODS.addFileContract,
+  //      USER_ADDRESS,
+  //      NON_CONST_USER_CONTRACT_METHODS_COSTS.addFileContract, 
+   //     [newFileContractAddress])
+    
 
    let result = await updateFileToIPFS(newFileContractAddress, 
                                        data_blob, 
                                        meta_data_json);
 
- //  return result;
-
+   return result;
 }
 
 
@@ -141,12 +140,12 @@ export async function updateFileToIPFS(FileContractAddress,
     console.log("IPFS HASH IS " + ipfsHash);
     console.log("hashed FILE IS: " + hashed_file)
     console.log("meta data is " + hashed_metadata);
-
+        ipfsHash = "QmXgZAUWd8yo4tvjBETqzUy3wLx5YRzuDwUQnBwRGrAmAo"
     let fileResult = await sendFileContractMethod(
         "updateFile",
         FileContractAddress,
-        1,
-        [   "foook", 
+        NON_CONST_FILE_CONTRACT_METHOD_COSTS.updateFile,
+        [   ipfsHash, 
             hashed_file, 
             hashed_metadata], true)
 
@@ -159,7 +158,7 @@ export async function updateFileToIPFS(FileContractAddress,
         "transaction_hash": fileResult["transactionHash"],
         "hash": hashed_file,
         "metadata_hash": hashed_metadata,
-        "ipfs_path": "sadsad",
+        "ipfs_path": ipfsHash,
         "added_at": Date.now(),
     }
 };
