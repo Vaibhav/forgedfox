@@ -4,7 +4,7 @@ contract FileContract {
 
   struct File {
     address creator;
-    bytes32 hash;
+    bytes32 fileHash;
     bytes32 metadataHash;
     bytes32 ipfsPath;
     uint addedAt; 
@@ -26,22 +26,22 @@ contract FileContract {
   }
 
   function updateFile(bytes32 ipfsPath, 
-                      bytes32 hash, 
-                      bytes32 metadataHash) public returns (bool success) {
+                      bytes32 file_hash, 
+                      bytes32 metadata_Hash) public returns (bool success) {
 
     address creator = msg.sender;
 
-    File storage file = FileVersions[hash];
+    File storage file = FileVersions[file_hash];
 
     // don't overwrite existing entries, and make sure handle isn't null
-    if(file.hash == 0 && metadataHash.length != 0) {
-      FileVersions[hash].creator = creator;
-      FileVersions[hash].hash = hash;
-      FileVersions[hash].ipfsPath = ipfsPath;
-      FileVersions[hash].metadataHash = metadataHash;
-      FileVersions[hash].addedAt = block.timestamp;
+    if(file.file_hash == 0 && metadata_Hash.length != 0) {
+      FileVersions[file_hash].creator = creator;
+      FileVersions[file_hash].fileHash = file_hash;
+      FileVersions[file_hash].ipfsPath = ipfsPath;
+      FileVersions[file_hash].metadataHash = metadata_Hash;
+      FileVersions[file_hash].addedAt = block.timestamp;
 
-      filesByHashes.push(hash);  // adds an entry for this user to the user 'whitepages'
+      filesByHashes.push(file_hash);  // adds an entry for this user to the user 'whitepages'
       return true;
     } else {
       return false; // either handle was null, or a user with this handle already existed
@@ -49,8 +49,8 @@ contract FileContract {
   }
 
 
-  function verifyFile(string data) {
-
+  function verifyFile(bytes32 file_hash, bytes32 meta_hash) {
+    return (fileHash == file_hash && metadataHash == meta_hash);
   }
 
 
@@ -58,10 +58,10 @@ contract FileContract {
 
   function getFiles() constant public returns (bytes32[]) { return filesByHashes; }
   
-  function getFile(bytes32 hash) constant public returns (address,bytes32,bytes32,bytes32,uint) {
-    File storage file = FileVersions[hash];
+  function getFile(bytes32 file_hash) constant public returns (address,bytes32,bytes32,bytes32,uint) {
+    File storage file = FileVersions[file_hash];
 
-    return (file.creator, file.hash, file.ipfsPath, file.metadataHash, file.addedAt);
+    return (file.creator, file.fileHash, file.ipfsPath, file.metadataHash, file.addedAt);
   }
 
 }
