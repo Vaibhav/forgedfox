@@ -11,13 +11,13 @@ const Web3 = require("web3");
 //TODO: HASH IT FROM THE BLOCKCHAIN.
 
 
-process.env.ETHER_ACCOUNT_ADDRESS = "0xa3a9c8d8CA5787743C4928cDF26f6e965296C688";
-process.env.ETHER_ACCOUNT_PASSWORD = "d8ba1dfb09d63711b63eda5683f6e2d71bfa4734173ad34bd1a7188babb4a258";
-process.env.CREATE_USER_GAS_COST = 4001900;
-process.env.CREATE_FILE_CONTRACT_COST = 4001900;
+const ETHER_ACCOUNT_ADDRESS = "0xa3a9c8d8CA5787743C4928cDF26f6e965296C688";
+const ETHER_ACCOUNT_PASSWORD = "d8ba1dfb09d63711b63eda5683f6e2d71bfa4734173ad34bd1a7188babb4a258";
+const CREATE_USER_GAS_COST = 4001900;
+const CREATE_FILE_CONTRACT_COST = 4001900;
 
-const rinkebyAccountAddress = "0xa3a9c8d8CA5787743C4928cDF26f6e965296C688"; //process.env.ETHER_ACCOUNT_ADDRESS;
-const rinkebyAccountPassword = "d8ba1dfb09d63711b63eda5683f6e2d71bfa4734173ad34bd1a7188babb4a258"; //process.env.ETHER_ACCOUNT_PASSWORD;
+const rinkebyAccountAddress = "0xa3a9c8d8CA5787743C4928cDF26f6e965296C688"; //ETHER_ACCOUNT_ADDRESS;
+const rinkebyAccountPassword = "d8ba1dfb09d63711b63eda5683f6e2d71bfa4734173ad34bd1a7188babb4a258"; //ETHER_ACCOUNT_PASSWORD;
 
 const EthereumTx = require('ethereumjs-tx')
 const privateKey = Buffer.from(rinkebyAccountPassword, 'hex')
@@ -43,8 +43,8 @@ web3.eth.getBlock("latest", (error, result) => {
 web3.eth.accounts;
 
 const accountInfo = web3.eth.accounts.wallet.add({
-    privateKey: rinkebyAccountPassword, //process.env.ETHER_ACCOUNT_PASSWORD,
-    address: rinkebyAccountAddress, //process.env.ETHER_ACCOUNT_ADDRESS,
+    privateKey: rinkebyAccountPassword, //ETHER_ACCOUNT_PASSWORD,
+    address: rinkebyAccountAddress, //ETHER_ACCOUNT_ADDRESS,
 });
 
 //const CREATE_BLACKPAPER_GAS_COST = 4001900; // TODO: CHANGE THIS TO ACCURATE VALUE
@@ -183,7 +183,7 @@ const transferShares = async (address, user1: string, user2: string, amount) => 
     //DO other tricks like check if amount is less than issued shares and less than amount that user1 holds to reduce cost of sendMethod.
     //Basically make sendMethod work 100% of the time by rewriting in js
     if (user1Ownership > amount) {
-        return await sendMethod(NON_CONST_BLACKPAPER_METHODS.transferSharesTo, address, process.env.TRANSFER_SHARES_TO_GAS_COST, [user1, user2, amount], true);
+        return await sendMethod(NON_CONST_BLACKPAPER_METHODS.transferSharesTo, address, TRANSFER_SHARES_TO_GAS_COST, [user1, user2, amount], true);
     } else {
         console.log("User 1 is not owner or does not have enuff stocks to fill trade.");
     }
@@ -193,7 +193,7 @@ const transferShares = async (address, user1: string, user2: string, amount) => 
 //export const addSecureFile(fileBlob,)
 
 const getBalance = async (ether = false) => {
-    const wei = await web3.eth.getBalance(process.env.ETHER_ACCOUNT_ADDRESS);
+    const wei = await web3.eth.getBalance(ETHER_ACCOUNT_ADDRESS);
     if (ether) {
         return web3.utils.fromWei(wei, 'ether');
     } else {
@@ -346,7 +346,7 @@ export const sendContractMethod = async (abi, methodName,
     //  console.log(transactionData);
     console.log("ESTIMATED GAS COST FOR TRADE IS : " + estimatedGasCost);
 
-    const transactions = await web3.eth.getTransactionCount(process.env.ETHER_ACCOUNT_ADDRESS);
+    const transactions = await web3.eth.getTransactionCount(ETHER_ACCOUNT_ADDRESS);
     const gasPrice = await web3.eth.getGasPrice();
 
     const nonce = web3.utils.toHex(transactions);
@@ -421,14 +421,14 @@ export const publishFileContract = async () => {
     // console.log(contractToBeDeployed);
     const gasLimit = await contractToBeDeployed.estimateGas();
 
-    //if (gasLimit > process.env.CREATE_BLACKPAPER_GAS_COST) {
-    //    return { "error": "GAS COST TOO HIGH PLEASE ADJUST IN PROCESS.ENV.FILE" }
+    //if (gasLimit > CREATE_BLACKPAPER_GAS_COST) {
+    //    return { "error": "GAS COST TOO HIGH PLEASE ADJUST IN FILE" }
     //  }
-    const transactions = await web3.eth.getTransactionCount(process.env.ETHER_ACCOUNT_ADDRESS);
+    const transactions = await web3.eth.getTransactionCount(ETHER_ACCOUNT_ADDRESS);
     const gasPrice = await web3.eth.getGasPrice();
     const nonce = web3.utils.toHex(transactions);
     const gasPriceHex = web3.utils.toHex(gasPrice);
-    const gasLimitHex = web3.utils.toHex(process.env.CREATE_FILE_CONTRACT_COST); //(user defined)  
+    const gasLimitHex = web3.utils.toHex(CREATE_FILE_CONTRACT_COST); //(user defined)  
 
     const txParams = {
         nonce: nonce,
@@ -470,14 +470,14 @@ export const publishUserContract = async (_firstName, _lastName, _email) => {
     // console.log(contractToBeDeployed);
     const gasLimit = await contractToBeDeployed.estimateGas();
 
-    //if (gasLimit > process.env.CREATE_BLACKPAPER_GAS_COST) {
-    //    return { "error": "GAS COST TOO HIGH PLEASE ADJUST IN PROCESS.ENV.FILE" }
+    //if (gasLimit > CREATE_BLACKPAPER_GAS_COST) {
+    //    return { "error": "GAS COST TOO HIGH PLEASE ADJUST IN FILE" }
     //  }
-    const transactions = await web3.eth.getTransactionCount(process.env.ETHER_ACCOUNT_ADDRESS);
+    const transactions = await web3.eth.getTransactionCount(ETHER_ACCOUNT_ADDRESS);
     const gasPrice = await web3.eth.getGasPrice();
     const nonce = web3.utils.toHex(transactions);
     const gasPriceHex = web3.utils.toHex(gasPrice);
-    const gasLimitHex = web3.utils.toHex(process.env.CREATE_USER_GAS_COST); //(user defined)  
+    const gasLimitHex = web3.utils.toHex(CREATE_USER_GAS_COST); //(user defined)  
 
     const txParams = {
         nonce: nonce,
