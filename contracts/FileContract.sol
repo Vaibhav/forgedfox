@@ -59,6 +59,23 @@ contract FileContract {
             && FileVersions[filesByHashes[mapSize-1]].metadataHash == meta_hash);
   }
 
+//TODO: MAYBE PUT THIS IN BLACKPAPER MASTER CONTRACT AS A UTIL...
+function bytes32ToString(bytes32 x) constant returns (string) {
+    bytes memory bytesString = new bytes(32);
+    uint charCount = 0;
+    for (uint j = 0; j < 32; j++) {
+        byte char = byte(bytes32(uint(x) * 2 ** (8 * j)));
+        if (char != 0) {
+            bytesString[charCount] = char;
+            charCount++;
+        }
+    }
+    bytes memory bytesStringTrimmed = new bytes(charCount);
+    for (j = 0; j < charCount; j++) {
+        bytesStringTrimmed[j] = bytesString[j];
+    }
+    return string(bytesStringTrimmed);
+}
 
   function getAdmin() constant public returns (address) { return FileContractAdmin; }
 
@@ -67,7 +84,11 @@ contract FileContract {
   function getFile(bytes32 file_hash) constant public returns (address,bytes32,bytes32,bytes32,uint) {
     File storage file = FileVersions[file_hash];
 
-    return (file.creator, file.fileHash, file.ipfsPath, file.metadataHash, file.addedAt);
+    return (file.creator, 
+            file.fileHash, 
+            file.ipfsPath, 
+            file.metadataHash, 
+            file.addedAt);
   } //This verifies a file.
 
 }
