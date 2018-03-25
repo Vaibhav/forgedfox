@@ -510,7 +510,13 @@ export const sendFileContractMethod = async (methodName,
     gasLimit,
     params = [],
     convertStringToBytes32 = false) => {
-    return sendContractMethod(FileContractJSON["abi"], methodName, address, gasLimit, params, convertStringToBytes32);
+        console.log(FileContractJSON["abi"]);
+    return sendContractMethod(FileContractJSON["abi"],
+                              methodName, 
+                              address, 
+                              gasLimit, 
+                              params, 
+                              convertStringToBytes32);
 }
 
 export const callFileContractMethod = async (abi, methodName,
@@ -524,7 +530,12 @@ export const sendUserContractMethod = async (methodName,
     gasLimit,
     params = [],
     convertStringToBytes32 = false) => {
-    return sendContractMethod(UserJSON["abi"], methodName, address, gasLimit, params, convertStringToBytes32);
+    return sendContractMethod(UserJSON["abi"], 
+                              methodName, 
+                              address, 
+                              gasLimit, 
+                              params, 
+                              convertStringToBytes32);
 }
 
 export const callUserContractMethod = async (methodName,
