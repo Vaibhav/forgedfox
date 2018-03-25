@@ -37,6 +37,7 @@ class VerifyResults extends Component {
   render() {
 
     const verFile = () => {
+      console.log('input', this.state.contract_address, this.props.result);
       verifyHash(this.state.contract_address, this.props.result)
       .then(verify => {
         this.setState({ verify, isLoading: false })
@@ -72,14 +73,46 @@ class VerifyResults extends Component {
       return (
         <div className='results'>
         <h2> 
-          {this.state.verify.found ? "File Could Not Be Found" : 
-          <div> 
-            ipfsPath : {this.state.verify.ipfsPath}
-            addedAt : {this.state.verify.addedAt}
-            creator : {this.state.verify.creator}
-            fileHash : {this.state.verify.fileHash}
-            metaDataHash : {this.state.verify.metadataHash}
-          </div>}
+          {!this.state.verify.found ? "File Could Not Be Found" : 
+          <div className='results'>
+          <table className="table-fill">
+          <thead>
+            <tr>
+            <th className="text-center" color='red'>Verified</th>
+            <th className="text-center" color='red'>TRUE</th>
+            </tr>
+          </thead>
+          <tbody className="table-hover">
+            <tr>
+              <td className="text-left">Contract Address</td>
+              <td className="text-left">{this.state.contract_address}</td>
+            </tr>
+            <tr>
+            <td className="text-left">Owner</td>
+            <td className="text-left">{this.state.verify.creator}</td>
+            </tr>
+            
+            <tr>
+            <td className="text-left">Added At</td>
+            <td className="text-left">{this.state.verify.addedAt}</td>
+            </tr>
+            <tr>
+            <td className="text-left">Metadata Hash</td>
+            <td className="text-left">{this.state.verify.metadataHash}</td>
+            </tr>
+            <tr>
+            <td className="text-left">File Hash</td>
+            <td className="text-left">{this.state.verify.fileHash}</td>
+            </tr>
+            
+            <tr>
+            <td className="text-left">IPFS Path</td>
+            <td className="text-left">{this.state.verify.ipfsPath}</td>
+            </tr>
+            </tbody>
+          </table>
+          </div>
+        }
         </h2>
         </div>
       );

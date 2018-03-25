@@ -48,7 +48,7 @@ class Form extends Component {
           <TextField
             hintText="Email"
             floatingLabelText="Email"
-            value="paul.iozzo@gmail.com"
+            value="paul@hotmail.com"
           /><br />
           <TextField
             hintText="File Description"

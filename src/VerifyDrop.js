@@ -76,7 +76,7 @@ class VerifyDrop extends Component {
                 this.state.files.map(f => <Paper style={style} zDepth={1} key={f.name}><b>{f.name}</b> - {f.size} bytes</Paper>)
               }
             </p>
-            <VerifyResults />
+            <VerifyResults result={this.state.result} />
         </div>
       )
     }
