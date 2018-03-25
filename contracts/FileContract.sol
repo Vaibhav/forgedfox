@@ -81,10 +81,16 @@ function bytes32ToString(bytes32 x) constant returns (string) {
 
   function getFiles() constant public returns (bytes32[]) { return filesByHashes; }
   
-  function getFile(bytes32 file_hash) constant public returns (address,bytes32,bytes32,bytes32,uint) {
+  function getFile(bytes32 file_hash) constant public returns (bool, address, bytes32, bytes32, bytes32, uint) {
     File storage file = FileVersions[file_hash];
 
-    return (file.creator, 
+    bool foundFile = false;
+    if(file.fileHash == file_hash){
+      foundFile = true;
+    }
+
+    return (foundFile,
+            file.creator, 
             file.fileHash, 
             file.ipfsPath, 
             file.metadataHash, 

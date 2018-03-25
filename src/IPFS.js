@@ -206,11 +206,12 @@ export async function verifyHash(FileContractAddress, test_file_blob) {
                                      [hashed_test_file_blob], true)
     console.log(result);
     const a = {
-        "creator": (result['0']),
-        "fileHash": bytes32ToString(result['1']),
-        "ipfsPath": bytes32ToString(result['2']),
-        "metadataHash": bytes32ToString(result['3']),
-        "addedAt": (result['4'])
+        "found": (result['0']),
+        "creator": (result['1']),
+        "fileHash": bytes32ToString(result['2']),
+        "ipfsPath": bytes32ToString(result['3']),
+        "metadataHash": bytes32ToString(result['4']),
+        "addedAt": (result['5'])
     };
 
     console.log(a);
