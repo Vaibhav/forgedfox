@@ -13,9 +13,11 @@ contract FileContract {
   //TODO: DO RESEARCH ON STORAGE OF FILES AS MAPPING OR ARRAY
   mapping ( bytes32 => File ) FileVersions; //Different versions of the same file
   bytes32[] filesByHashes;
+  uint mapSize;
 
   function FileContract() public payable {
     FileContractAdmin = msg.sender;
+    mapSize = 0;
   }
 
   modifier onlyAdmin() {
@@ -42,6 +44,7 @@ contract FileContract {
       FileVersions[file_hash].addedAt = block.timestamp;
 
       filesByHashes.push(file_hash);  // adds an entry for this user to the user 'whitepages'
+      mapSize += 1;
       return true;
     } else {
       return false; // either handle was null, or a user with this handle already existed
@@ -49,9 +52,9 @@ contract FileContract {
   }
 
 
-  function verifyFile(bytes32 file_hash, bytes32 meta_hash) {
-    return (FileVersions[FileVersions.length-1].fileHash == file_hash 
-            && FileVersions[FileVersions.length-1].metadataHash == meta_hash);
+  function verifyFile(bytes32 file_hash, bytes32 meta_hash) public returns (bool) {
+    return (FileVersions[filesByHashes[mapSize-1]].fileHash == file_hash 
+            && FileVersions[filesByHashes[mapSize-1]].metadataHash == meta_hash);
   }
 
 
