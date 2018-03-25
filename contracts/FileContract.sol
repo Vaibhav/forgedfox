@@ -31,7 +31,8 @@ contract FileContract {
                       bytes32 file_hash, 
                       bytes32 metadata_Hash) public returns (bool success) {
 
-    address creator = msg.sender;
+    address creator = msg.sender; 
+    //We need this digital signiture so files can be said to be authroized by these signitures that idenitfy you
 
     File storage file = FileVersions[file_hash];
 
@@ -52,6 +53,7 @@ contract FileContract {
   }
 
 
+  //Not the correct way to verify just try to index into the map to do it!
   function verifyFile(bytes32 file_hash, bytes32 meta_hash) public returns (bool) {
     return (FileVersions[filesByHashes[mapSize-1]].fileHash == file_hash 
             && FileVersions[filesByHashes[mapSize-1]].metadataHash == meta_hash);
@@ -66,6 +68,6 @@ contract FileContract {
     File storage file = FileVersions[file_hash];
 
     return (file.creator, file.fileHash, file.ipfsPath, file.metadataHash, file.addedAt);
-  }
+  } //This verifies a file.
 
 }
