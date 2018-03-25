@@ -68,27 +68,27 @@ class BR extends Component {
             </tr>
             <tr>
             <td className="text-left">Added At</td>
-            <td className="text-left">{this.state.added_at}</td>
+            <td className="text-left">{this.state.block.added_at}</td>
             </tr>
             <tr>
             <td className="text-left">Metadata Hash</td>
-            <td className="text-left">{this.state.metadata_hash}</td>
+            <td className="text-left">{this.state.block.metadata_hash}</td>
             </tr>
             <tr>
             <td className="text-left">File Hash</td>
-            <td className="text-left">{this.state.hash}</td>
+            <td className="text-left">{this.state.block.hash}</td>
             </tr>
             <tr>
             <td className="text-left">Transaction Hash</td>
-            <td className="text-left">{this.state.transaction_hash}</td>
+            <td className="text-left">{this.state.block.transaction_hash}</td>
             </tr>
             <tr>
             <td className="text-left">Block Hash</td>
-            <td className="text-left">{this.state.block_hash}</td>
+            <td className="text-left">{this.state.block.block_hash}</td>
             </tr>
             <tr>
             <td className="text-left">Block Number</td>
-            <td className="text-left">{this.state.block_number}</td>
+            <td className="text-left">{this.state.block.block_number}</td>
             </tr>
           </tbody>
         </table>
