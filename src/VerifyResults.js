@@ -58,11 +58,8 @@ class VerifyResults extends Component {
       return (
         <div>
         <TextField
-            hintText="Enter Conctract Address"
-            floatingLabelText="Conctract Address"
-            multiLine={true}
-            rows={2}
-            floatingLabelStyle={{ position: 'relative'}}
+            floatingLabelText="Contract Address"
+            floatingLabelStyle={{ position: 'relative', width: 50}}
             onChange={this.handleChange}
           />
       <RaisedButton label="Add File" primary={true} style={{ margin: 12 }} onClick={onclickHandler.bind(this)}/>
@@ -121,7 +118,7 @@ class VerifyResults extends Component {
       <div className='center'>
         <RefreshIndicator
           size={75}
-          left={70}
+          left={60}
           top={0}
           loadingColor="#FF9800"
           status="loading"

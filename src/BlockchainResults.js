@@ -108,7 +108,7 @@ class BR extends Component {
     return (
       <div className='center'>
         <RefreshIndicator
-          size={50}
+          size={75}
           left={70}
           top={0}
           loadingColor="#FF9800"
